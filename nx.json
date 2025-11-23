@@ -17,6 +17,12 @@
   },
   "plugins": [
     {
+      "plugin": "@nx/angular/plugin",
+      "options": {
+        "presetName": "@nx/angular:standalone"
+      }
+    },
+    {
       "plugin": "@nx/js/typescript",
       "options": {
         "typecheck": {

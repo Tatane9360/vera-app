@@ -1,0 +1,14 @@
+// packages/shared-types/tsconfig.json
+
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "types": [],
+    "experimentalDecorators": true,
+    "composite": true,
+    "declaration": true
+  },
+  "files": [],
+  "include": ["src/**/*.ts"]
+}
