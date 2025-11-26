@@ -2,7 +2,14 @@
   "name": "@compet-website/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "packageManager": "pnpm@10.23.0",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "serve:client": "nx run client:serve",
+    "serve:server": "nx run server:serve",
+    "build": "nx run-many -t build",
+    "test": "nx run-many -t test"
+  },
   "private": true,
   "devDependencies": {
     "@angular-devkit/core": "~20.3.0",
