@@ -17,6 +17,11 @@ export const appRoutes: Route[] = [
       import('./features/contact/contact.routes').then((m) => m.CONTACT_ROUTES),
   },
   {
+    path: 'fact-checking',
+    loadChildren: () =>
+      import('./features/fact-checking/fact-checking.routes').then((m) => m.FACT_CHECKING_ROUTES),
+  },
+  {
     path: '**',
     redirectTo: '',
   },
