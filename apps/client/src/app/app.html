@@ -21,16 +21,36 @@
            class="hover:text-gray-200 transition pb-1">
           À Propos
         </a>
-        <a routerLink="/login" 
+
+        <!-- Afficher Dashboard si connecté -->
+        <a *ngIf="isAuthenticated" 
+           routerLink="/dashboard" 
            routerLinkActive="border-b-2 border-white"
            class="hover:text-gray-200 transition pb-1">
-          Login
+          Dashboard
         </a>
+
         <a routerLink="/contact" 
            routerLinkActive="border-b-2 border-white"
            class="hover:text-gray-200 transition pb-1">
           Contact
         </a>
+
+        <!-- Afficher Login si non connecté, sinon Email + Déconnexion -->
+        <a *ngIf="!isAuthenticated" 
+           routerLink="/login" 
+           routerLinkActive="border-b-2 border-white"
+           class="hover:text-gray-200 transition pb-1">
+          Login
+        </a>
+
+        <div *ngIf="isAuthenticated" class="flex items-center gap-4">
+          <button
+            (click)="logout()"
+            class="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-md transition text-sm font-medium">
+            Déconnexion
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -47,4 +67,3 @@
     <p>&copy; 2025 Compét Website. Tous droits réservés.</p>
   </div>
 </footer>
-

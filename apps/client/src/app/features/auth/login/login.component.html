@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <div *ngIf="errorMessage" class="text-red-500 text-sm text-center">
+      <div *ngIf="errorMessage" class="text-red-500 text-sm text-center bg-red-50 p-3 rounded">
         {{ errorMessage }}
       </div>
 
@@ -40,11 +40,19 @@
         <button
           type="submit"
           [disabled]="loginForm.invalid || isLoading"
-          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-        >
+          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50">
           <span *ngIf="!isLoading">Se connecter</span>
           <span *ngIf="isLoading">Connexion...</span>
         </button>
+      </div>
+
+      <div class="text-center space-y-2">
+        <a routerLink="/forgot-password" class="text-indigo-600 hover:text-indigo-500 text-sm block">
+          Mot de passe oublié ?
+        </a>
+        <a routerLink="/register" class="text-indigo-600 hover:text-indigo-500 text-sm block">
+          Pas encore de compte ? S'inscrire
+        </a>
       </div>
     </form>
   </div>

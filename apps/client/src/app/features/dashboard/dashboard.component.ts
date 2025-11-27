@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -12,12 +12,10 @@ import { User } from '@supabase/supabase-js';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  user: User | null = null;
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  user: User | null = null;
 
   ngOnInit() {
     this.authService.currentUser$.subscribe(user => {
@@ -27,6 +25,6 @@ export class DashboardComponent implements OnInit {
 
   async logout() {
     await this.authService.signOut();
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/login']);
   }
 }

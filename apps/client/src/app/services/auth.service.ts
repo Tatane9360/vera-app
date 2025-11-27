@@ -12,7 +12,11 @@ export class AuthService {
   public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
 
   constructor() {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+    this.supabase = createClient(
+      environment.supabaseUrl,
+      environment.supabaseKey
+    );
+
     this.loadUser();
   }
 
@@ -20,7 +24,6 @@ export class AuthService {
     const { data: { user } } = await this.supabase.auth.getUser();
     this.currentUserSubject.next(user);
 
-    // Écouter les changements d'état d'authentification
     this.supabase.auth.onAuthStateChange((event, session) => {
       this.currentUserSubject.next(session?.user ?? null);
     });
@@ -29,7 +32,7 @@ export class AuthService {
   async signUp(email: string, password: string) {
     const { data, error } = await this.supabase.auth.signUp({
       email,
-      password
+      password,
     });
     return { data, error };
   }
@@ -37,14 +40,31 @@ export class AuthService {
   async signIn(email: string, password: string) {
     const { data, error } = await this.supabase.auth.signInWithPassword({
       email,
-      password
+      password,
     });
     return { data, error };
   }
 
   async signOut() {
     const { error } = await this.supabase.auth.signOut();
+    this.currentUserSubject.next(null);
     return { error };
+  }
+
+  // Envoyer un email de réinitialisation de mot de passe
+  async resetPasswordForEmail(email: string) {
+    const { data, error } = await this.supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    return { data, error };
+  }
+
+  // Mettre à jour le mot de passe
+  async updatePassword(newPassword: string) {
+    const { data, error } = await this.supabase.auth.updateUser({
+      password: newPassword,
+    });
+    return { data, error };
   }
 
   getCurrentUser(): User | null {

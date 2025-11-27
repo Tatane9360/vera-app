@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 export const appRoutes: Route[] = [
   {
@@ -17,12 +18,33 @@ export const appRoutes: Route[] = [
       import('./features/auth/login/login.routes').then((m) => m.LOGIN_ROUTES),
   },
   {
+    path: 'register',
+    loadChildren: () =>
+      import('./features/auth/register/register.route').then((m) => m.REGISTER_ROUTES),
+  },
+  {
+    path: 'forgot-password',
+    loadChildren: () =>
+      import('./features/auth/forgot-password/forgot-password.routes').then((m) => m.FORGOT_PASSWORD_ROUTES),
+  },
+  {
+    path: 'reset-password',
+    loadChildren: () =>
+      import('./features/auth/reset-password/reset-password.routes').then((m) => m.RESET_PASSWORD_ROUTES),
+  },
+  {
+    path: 'dashboard',
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('./features/dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTES),
+  },
+  {
     path: 'contact',
     loadChildren: () =>
       import('./features/contact/contact.routes').then((m) => m.CONTACT_ROUTES),
   },
-  {
+  {    
     path: '**',
-    redirectTo: '',
+    redirectTo: '',    
   },
-];
+]; 

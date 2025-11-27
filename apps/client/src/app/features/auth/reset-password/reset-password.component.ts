@@ -5,25 +5,24 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-reset-password',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  templateUrl: './reset-password.component.html',
+  styleUrls: ['./reset-password.component.scss']
 })
-export class RegisterComponent {
+export class ResetPasswordComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  registerForm: FormGroup;
+  resetPasswordForm: FormGroup;
   errorMessage = '';
   successMessage = '';
   isLoading = false;
 
   constructor() {
-    this.registerForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+    this.resetPasswordForm = this.fb.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
     }, { validators: this.passwordMatchValidator });
@@ -41,7 +40,7 @@ export class RegisterComponent {
   }
 
   async onSubmit() {
-    if (this.registerForm.invalid) {
+    if (this.resetPasswordForm.invalid) {
       return;
     }
 
@@ -49,18 +48,18 @@ export class RegisterComponent {
     this.errorMessage = '';
     this.successMessage = '';
 
-    const { email, password } = this.registerForm.value;
-    const { data, error } = await this.authService.signUp(email, password);
+    const { password } = this.resetPasswordForm.value;
+    const { error } = await this.authService.updatePassword(password);
 
     this.isLoading = false;
 
     if (error) {
-      this.errorMessage = 'Une erreur est survenue lors de l\'inscription';
+      this.errorMessage = 'Une erreur est survenue lors de la réinitialisation du mot de passe.';
     } else {
-      this.successMessage = 'Inscription réussie ! Vérifiez votre email pour confirmer votre compte.';
+      this.successMessage = 'Votre mot de passe a été réinitialisé avec succès !';
       setTimeout(() => {
-        this.router.navigate(['/login']);
-      }, 3000);
+        this.router.navigate(['/dashboard']);
+      }, 2000);
     }
   }
 }
