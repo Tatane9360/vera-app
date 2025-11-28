@@ -46,21 +46,30 @@ export class FactCheckingService {
       // 1. Fetch URL content
       const { data } = await axios.get(url);
       
-      // 2. Parse HTML to extract text
+      // 2. Parse HTML to extract metadata (title and description)
       const $ = cheerio.load(data);
-      // Remove scripts, styles, etc.
-      $('script').remove();
-      $('style').remove();
-      $('nav').remove();
-      $('footer').remove();
-      const textContent = $('body').text().replace(/\s+/g, ' ').trim().substring(0, 10000); // Limit context size
-
-      // 3. Send to Gemini for summarization
-      const prompt = `Analyse le texte suivant pour le fact-checking. Identifie l'allégation principale ou la fake news potentielle. Renvoie UNIQUEMENT cette allégation sous forme d'une phrase affirmative simple et précise, sans titre ni contexte. \n\nTexte : ${textContent}`;
       
-      const result = await this.model.generateContent(prompt);
-      const response = await result.response;
-      return response.text();
+      const title = $('title').text().trim();
+      const metaDescription = $('meta[name="description"]').attr('content')?.trim() || '';
+      const ogTitle = $('meta[property="og:title"]').attr('content')?.trim() || '';
+      const ogDescription = $('meta[property="og:description"]').attr('content')?.trim() || '';
+
+      // Prioritize OG tags or standard tags
+      const finalTitle = ogTitle || title;
+      const finalDescription = ogDescription || metaDescription;
+
+      // Construct the claim from metadata
+      let claim = finalTitle;
+      if (finalDescription) {
+        claim += `. ${finalDescription}`;
+      }
+
+      if (!claim) {
+         // Fallback if no metadata found, take first paragraph
+         claim = $('p').first().text().trim().substring(0, 200);
+      }
+
+      return claim;
     } catch (error) {
       console.error('Error analyzing URL:', error);
       throw new HttpException('Failed to analyze URL', HttpStatus.INTERNAL_SERVER_ERROR);

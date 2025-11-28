@@ -1,7 +1,17 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FactCheckingService } from './fact-checking.service';
+
+interface ChatMessage {
+  id: string;
+  role: 'user' | 'vera';
+  content: string;
+  type: 'text' | 'image' | 'url';
+  imagePreview?: string;
+  links?: { url: string; domain: string; favicon: string }[];
+  isLoading?: boolean;
+}
 
 @Component({
   selector: 'app-fact-checking',
@@ -10,103 +20,189 @@ import { FactCheckingService } from './fact-checking.service';
   templateUrl: './fact-checking.component.html',
   styleUrl: './fact-checking.component.scss',
 })
-export class FactCheckingComponent {
+export class FactCheckingComponent implements AfterViewChecked {
   private factCheckingService = inject(FactCheckingService);
+  
+  @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
-  activeTab = signal<'image' | 'url'>('image');
+  messages = signal<ChatMessage[]>([]);
+  inputText = signal('');
   isLoading = signal(false);
-  result = signal<string | null>(null);
-  verificationResult = signal<string | null>(null);
-  error = signal<string | null>(null);
 
-  // Image
-  selectedFile: File | null = null;
-  imagePreview: string | null = null;
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
 
-  // URL
-  urlInput = '';
+  scrollToBottom(): void {
+    try {
+      this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+    } catch(err) { }
+  }
 
-  setActiveTab(tab: 'image' | 'url') {
-    this.activeTab.set(tab);
-    this.result.set(null);
-    this.verificationResult.set(null);
-    this.error.set(null);
+  triggerFileInput() {
+    this.fileInput.nativeElement.click();
   }
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-      
-      // Preview
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result as string;
-      };
-      reader.readAsDataURL(this.selectedFile);
+      const file = input.files[0];
+      this.handleImageAnalysis(file);
+      input.value = ''; // Reset
     }
   }
 
-  analyzeImage() {
-    if (!this.selectedFile) return;
+  async handleImageAnalysis(file: File) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const preview = e.target?.result as string;
+      this.addMessage('user', 'Analyse de l\'image...', 'image', preview);
+      this.processImage(file);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  processImage(file: File) {
+    this.isLoading.set(true);
+    const loadingMsgId = this.addLoadingMessage();
+
+    this.factCheckingService.analyzeImage(file).subscribe({
+      next: (response) => {
+        this.removeMessage(loadingMsgId);
+        const verification = response.verification || response.text;
+        this.addVeraResponse(verification);
+        this.isLoading.set(false);
+      },
+      error: (err) => {
+        this.removeMessage(loadingMsgId);
+        this.addMessage('vera', 'Désolé, une erreur est survenue lors de l\'analyse de l\'image.', 'text');
+        this.isLoading.set(false);
+      }
+    });
+  }
+
+  sendMessage() {
+    const text = this.inputText().trim();
+    if (!text) return;
+
+    this.inputText.set('');
     
-    this.isLoading.set(true);
-    this.error.set(null);
-    this.result.set(null);
-    this.verificationResult.set(null);
+    // Check if URL
+    const urlRegex = /^(http|https):\/\/[^ "]+$/;
+    if (urlRegex.test(text)) {
+      this.addMessage('user', text, 'url');
+      this.processUrl(text);
+    } else {
+      this.addMessage('user', text, 'text');
+      this.processText(text);
+    }
+  }
 
-    this.factCheckingService.analyzeImage(this.selectedFile).subscribe({
+  processUrl(url: string) {
+    this.isLoading.set(true);
+    const loadingMsgId = this.addLoadingMessage();
+
+    this.factCheckingService.analyzeUrl(url).subscribe({
       next: (response) => {
-        this.result.set(response.text);
+        this.removeMessage(loadingMsgId);
+        const verification = response.verification || response.text;
+        this.addVeraResponse(verification);
         this.isLoading.set(false);
       },
       error: (err) => {
-        console.error(err);
-        this.error.set('Une erreur est survenue lors de l\'analyse de l\'image.');
+        this.removeMessage(loadingMsgId);
+        this.addMessage('vera', 'Désolé, une erreur est survenue lors de l\'analyse du lien.', 'text');
         this.isLoading.set(false);
       }
     });
   }
 
-  analyzeUrl() {
-    if (!this.urlInput) return;
-
+  processText(text: string) {
     this.isLoading.set(true);
-    this.error.set(null);
-    this.result.set(null);
-    this.verificationResult.set(null);
+    const loadingMsgId = this.addLoadingMessage();
 
-    this.factCheckingService.analyzeUrl(this.urlInput).subscribe({
+    this.factCheckingService.verifyClaim(text).subscribe({
       next: (response) => {
-        this.result.set(response.text);
+        this.removeMessage(loadingMsgId);
+        this.addVeraResponse(response.result);
         this.isLoading.set(false);
       },
       error: (err) => {
-        console.error(err);
-        this.error.set('Une erreur est survenue lors de l\'analyse de l\'URL.');
+        this.removeMessage(loadingMsgId);
+        this.addMessage('vera', 'Désolé, une erreur est survenue lors de la vérification.', 'text');
         this.isLoading.set(false);
       }
     });
   }
 
-  verifyClaim() {
-    const claim = this.result();
-    if (!claim) return;
+  private addMessage(role: 'user' | 'vera', content: string, type: 'text' | 'image' | 'url', imagePreview?: string): string {
+    const id = Date.now().toString() + Math.random().toString();
+    this.messages.update(msgs => [...msgs, {
+      id,
+      role,
+      content,
+      type,
+      imagePreview
+    }]);
+    return id;
+  }
 
-    this.isLoading.set(true);
-    this.error.set(null);
-    this.verificationResult.set(null);
+  private addLoadingMessage(): string {
+    const id = Date.now().toString() + Math.random().toString();
+    this.messages.update(msgs => [...msgs, {
+      id,
+      role: 'vera',
+      content: 'Analyse en cours...',
+      type: 'text',
+      isLoading: true
+    }]);
+    return id;
+  }
 
-    this.factCheckingService.verifyClaim(claim).subscribe({
-      next: (response) => {
-        this.verificationResult.set(response.result);
-        this.isLoading.set(false);
-      },
-      error: (err) => {
-        console.error(err);
-        this.error.set('Une erreur est survenue lors de la vérification avec VERA.');
-        this.isLoading.set(false);
+  private removeMessage(id: string) {
+    this.messages.update(msgs => msgs.filter(m => m.id !== id));
+  }
+
+  private addVeraResponse(text: string) {
+    const links = this.extractLinks(text);
+    this.messages.update(msgs => [...msgs, {
+      id: Date.now().toString(),
+      role: 'vera',
+      content: text,
+      type: 'text',
+      links
+    }]);
+  }
+
+  private extractLinks(text: string) {
+    if (!text) return [];
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const matches = text.match(urlRegex) || [];
+    
+    const links = matches.map(url => {
+      try {
+        let cleanUrl = url;
+        // Recursively remove trailing punctuation that are likely not part of the URL
+        while (/[.,;)!?\]]$/.test(cleanUrl)) {
+          cleanUrl = cleanUrl.slice(0, -1);
+        }
+        
+        const urlObj = new URL(cleanUrl);
+        return {
+          url: cleanUrl,
+          domain: urlObj.hostname,
+          favicon: `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=64`
+        };
+      } catch (e) {
+        return null;
       }
-    });
+    }).filter((link): link is NonNullable<typeof link> => link !== null);
+
+    return links.filter((link, index, self) =>
+      index === self.findIndex((t) => (
+        t.url === link.url
+      ))
+    );
   }
 }

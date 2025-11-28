@@ -13,13 +13,15 @@ export class FactCheckingController {
   @UseInterceptors(FileInterceptor('file'))
   async analyzeImage(@UploadedFile() file: Express.Multer.File): Promise<AnalyzeResponseDto> {
     const text = await this.factCheckingService.analyzeImage(file);
-    return { text, source: 'image' };
+    const verification = await this.factCheckingService.verifyClaim(text);
+    return { text, source: 'image', verification };
   }
 
   @Post('analyze-url')
   async analyzeUrl(@Body() dto: AnalyzeUrlDto): Promise<AnalyzeResponseDto> {
     const text = await this.factCheckingService.analyzeUrl(dto.url);
-    return { text, source: 'url' };
+    const verification = await this.factCheckingService.verifyClaim(text);
+    return { text, source: 'url', verification };
   }
 
   @Post('verify')

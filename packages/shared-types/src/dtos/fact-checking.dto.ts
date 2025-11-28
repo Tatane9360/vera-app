@@ -5,6 +5,7 @@ export class AnalyzeUrlDto {
 export class AnalyzeResponseDto {
   text!: string;
   source!: 'image' | 'url';
+  verification?: string;
 }
 
 export class VerifyClaimDto {
