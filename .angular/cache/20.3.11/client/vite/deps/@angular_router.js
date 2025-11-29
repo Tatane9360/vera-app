@@ -1,7 +1,7 @@
 import {
   Title
-} from "./chunk-RDN6UKNR.js";
-import "./chunk-ST5KFFGH.js";
+} from "./chunk-RH3FX7RT.js";
+import "./chunk-ZQASBDSE.js";
 import {
   HashLocationStrategy,
   LOCATION_INITIALIZED,
@@ -9,7 +9,7 @@ import {
   LocationStrategy,
   PathLocationStrategy,
   ViewportScroller
-} from "./chunk-UIA3PKJX.js";
+} from "./chunk-STCUVFAT.js";
 import "./chunk-IKRCH57Y.js";
 import {
   APP_BOOTSTRAP_LISTENER,
@@ -63,7 +63,7 @@ import {
   ɵɵloadQuery,
   ɵɵqueryRefresh,
   ɵɵsanitizeUrlOrResourceUrl
-} from "./chunk-2N6LWMXI.js";
+} from "./chunk-QADIGF54.js";
 import {
   DOCUMENT,
   DestroyRef,
@@ -75,11 +75,9 @@ import {
   PendingTasksInternal,
   RuntimeError,
   Version,
-  defer,
   formatRuntimeError,
   inject,
   isInjectable,
-  isObservable,
   isStandalone,
   makeEnvironmentProviders,
   runInInjectionContext,
@@ -88,7 +86,12 @@ import {
   ɵɵdefineInjectable,
   ɵɵdefineInjector,
   ɵɵinject
-} from "./chunk-YBUOFLQM.js";
+} from "./chunk-2WL7BTRC.js";
+import {
+  defer,
+  isObservable
+} from "./chunk-LQBK6TNK.js";
+import "./chunk-T3HOYESR.js";
 import {
   BehaviorSubject,
   ConnectableObservable,
@@ -121,12 +124,13 @@ import {
   takeUntil,
   tap,
   throwError
-} from "./chunk-WVDALF4D.js";
+} from "./chunk-43EE4BUE.js";
+import "./chunk-WLQ4F4C6.js";
 import {
   __async,
   __spreadProps,
   __spreadValues
-} from "./chunk-WDMUDEB6.js";
+} from "./chunk-S35DAJRX.js";
 
 // node_modules/.pnpm/@angular+router@20.3.13_@an_948320566b61c315c15f07da74bbe4a5/node_modules/@angular/router/fesm2022/router2.mjs
 var PRIMARY_OUTLET = "primary";
