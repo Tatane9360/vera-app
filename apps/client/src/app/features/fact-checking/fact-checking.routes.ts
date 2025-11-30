@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { FactCheckingComponent } from './fact-checking.component';
+import { FactCheckingPageComponent } from './fact-checking-page.component';
 
 export const FACT_CHECKING_ROUTES: Routes = [
   {
     path: '',
-    component: FactCheckingComponent,
+    component: FactCheckingPageComponent,
   },
 ];

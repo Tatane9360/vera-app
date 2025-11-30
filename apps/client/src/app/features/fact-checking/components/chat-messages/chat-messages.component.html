@@ -1,0 +1,10 @@
+<div #scrollContainer class="flex-1 overflow-y-auto p-4 space-y-6 scroll-smooth">
+  
+  <!-- Welcome Message if empty -->
+  <app-welcome-message *ngIf="messages().length === 0"></app-welcome-message>
+
+  <!-- Messages -->
+  <ng-container *ngFor="let msg of messages()">
+    <app-chat-message [message]="msg"></app-chat-message>
+  </ng-container>
+</div>

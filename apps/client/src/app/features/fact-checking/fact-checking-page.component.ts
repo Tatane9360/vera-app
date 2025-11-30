@@ -1,56 +1,43 @@
-import { Component, inject, signal, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { FactCheckingService } from './fact-checking.service';
-
-interface ChatMessage {
-  id: string;
-  role: 'user' | 'vera';
-  content: string;
-  type: 'text' | 'image' | 'url';
-  imagePreview?: string;
-  links?: { url: string; domain: string; favicon: string }[];
-  isLoading?: boolean;
-}
+import { ChatMessage, SourceLink } from './models/chat-message.model';
+import { ChatHeaderComponent } from './components/chat-header/chat-header.component';
+import { ChatMessagesComponent } from './components/chat-messages/chat-messages.component';
+import { ChatInputComponent } from './components/chat-input/chat-input.component';
 
 @Component({
-  selector: 'app-fact-checking',
+  selector: 'app-fact-checking-page',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './fact-checking.component.html',
-  styleUrl: './fact-checking.component.scss',
+  imports: [
+    CommonModule,
+    ChatHeaderComponent,
+    ChatMessagesComponent,
+    ChatInputComponent
+  ],
+  templateUrl: './fact-checking-page.component.html',
+  styleUrl: './fact-checking-page.component.scss',
 })
-export class FactCheckingComponent implements AfterViewChecked {
+export class FactCheckingPageComponent {
   private factCheckingService = inject(FactCheckingService);
-  
-  @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
-  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   messages = signal<ChatMessage[]>([]);
-  inputText = signal('');
   isLoading = signal(false);
 
-  ngAfterViewChecked() {
-    this.scrollToBottom();
-  }
-
-  scrollToBottom(): void {
-    try {
-      this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
-    } catch(err) { }
-  }
-
-  triggerFileInput() {
-    this.fileInput.nativeElement.click();
-  }
-
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      this.handleImageAnalysis(file);
-      input.value = ''; // Reset
+  onSendText(text: string) {
+    // Check if URL
+    const urlRegex = /^(http|https):\/\/[^ "]+$/;
+    if (urlRegex.test(text)) {
+      this.addMessage('user', text, 'url');
+      this.processUrl(text);
+    } else {
+      this.addMessage('user', text, 'text');
+      this.processText(text);
     }
+  }
+
+  onSendFile(file: File) {
+    this.handleImageAnalysis(file);
   }
 
   async handleImageAnalysis(file: File) {
@@ -74,29 +61,12 @@ export class FactCheckingComponent implements AfterViewChecked {
         this.addVeraResponse(verification);
         this.isLoading.set(false);
       },
-      error: (err) => {
+      error: () => {
         this.removeMessage(loadingMsgId);
         this.addMessage('vera', 'Désolé, une erreur est survenue lors de l\'analyse de l\'image.', 'text');
         this.isLoading.set(false);
       }
     });
-  }
-
-  sendMessage() {
-    const text = this.inputText().trim();
-    if (!text) return;
-
-    this.inputText.set('');
-    
-    // Check if URL
-    const urlRegex = /^(http|https):\/\/[^ "]+$/;
-    if (urlRegex.test(text)) {
-      this.addMessage('user', text, 'url');
-      this.processUrl(text);
-    } else {
-      this.addMessage('user', text, 'text');
-      this.processText(text);
-    }
   }
 
   processUrl(url: string) {
@@ -110,7 +80,7 @@ export class FactCheckingComponent implements AfterViewChecked {
         this.addVeraResponse(verification);
         this.isLoading.set(false);
       },
-      error: (err) => {
+      error: () => {
         this.removeMessage(loadingMsgId);
         this.addMessage('vera', 'Désolé, une erreur est survenue lors de l\'analyse du lien.', 'text');
         this.isLoading.set(false);
@@ -128,7 +98,7 @@ export class FactCheckingComponent implements AfterViewChecked {
         this.addVeraResponse(response.result);
         this.isLoading.set(false);
       },
-      error: (err) => {
+      error: () => {
         this.removeMessage(loadingMsgId);
         this.addMessage('vera', 'Désolé, une erreur est survenue lors de la vérification.', 'text');
         this.isLoading.set(false);
@@ -175,7 +145,7 @@ export class FactCheckingComponent implements AfterViewChecked {
     }]);
   }
 
-  private extractLinks(text: string) {
+  private extractLinks(text: string): SourceLink[] {
     if (!text) return [];
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     const matches = text.match(urlRegex) || [];
@@ -195,6 +165,7 @@ export class FactCheckingComponent implements AfterViewChecked {
           favicon: `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=64`
         };
       } catch (e) {
+        console.error('Error extracting link:', e);
         return null;
       }
     }).filter((link): link is NonNullable<typeof link> => link !== null);

@@ -1,0 +1,13 @@
+<div class="flex flex-col h-screen bg-[#121212] text-white overflow-hidden">
+  <!-- Header -->
+  <app-chat-header></app-chat-header>
+
+  <!-- Chat Area -->
+  <app-chat-messages [messages]="messages()"></app-chat-messages>
+
+  <!-- Input Area -->
+  <app-chat-input 
+    (sendText)="onSendText($event)"
+    (sendFile)="onSendFile($event)"
+  ></app-chat-input>
+</div>
