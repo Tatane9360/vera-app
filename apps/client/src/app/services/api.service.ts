@@ -17,4 +17,12 @@ export class ApiService {
       map((response) => new ApiResponseDto(response))
     );
   }
+
+  getFormResponses(formId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/forms/${formId}/responses`);
+  }
+
+  getFormStatistics(formId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/forms/${formId}/statistics`);
+  }
 }

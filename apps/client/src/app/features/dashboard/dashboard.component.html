@@ -17,6 +17,40 @@
           Vous êtes connecté en tant que <strong>{{ user?.email }}</strong>
         </p>
       </div>
+
+      <div class="mt-8 border-4 border-dashed border-gray-200 rounded-lg p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Intégration Google Forms</h2>
+        
+        <div class="flex gap-4 mb-4">
+          <input 
+            type="text" 
+            [(ngModel)]="formId" 
+            placeholder="ID du Formulaire Google"
+            class="flex-1 p-2 border border-gray-300 rounded"
+          >
+          <button 
+            (click)="fetchResponses()"
+            [disabled]="loading || !formId"
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+          >
+            {{ loading ? 'Chargement...' : 'Voir les réponses' }}
+          </button>
+        </div>
+        
+        <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {{ error }}
+        </div>
+
+        <div *ngIf="statistics" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+          <ng-container *ngFor="let question of statistics | keyvalue">
+            <app-chart-card
+              [title]="question.key"
+              [data]="question.value"
+              class="h-full"
+            ></app-chart-card>
+          </ng-container>
+        </div>
+      </div>
     </div>
   </main>
 </div>
