@@ -7,6 +7,10 @@
       </a>
 
       <div class="flex items-center gap-8">
+        <button (click)="themeService.toggleTheme()" class="p-2 rounded-full hover:bg-white/10 transition-colors">
+          <app-icon [icon]="themeService.darkMode() ? 'sun' : 'moon'"></app-icon>
+        </button>
+
         <a routerLink="/" 
            routerLinkActive="border-b-2 border-white"
            [routerLinkActiveOptions]="{ exact: true }"

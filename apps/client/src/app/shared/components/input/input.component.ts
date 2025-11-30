@@ -17,7 +17,7 @@ import { IconComponent } from '../icon/icon.component';
   template: `
     <div class="w-full">
       @if (label()) {
-        <label [for]="id()" class="block text-sm font-medium text-gray-300 mb-1">{{ label() }}</label>
+        <label [for]="id()" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ label() }}</label>
       }
       <div class="relative">
         <input
@@ -28,7 +28,7 @@ import { IconComponent } from '../icon/icon.component';
           (input)="onInput($event)"
           (blur)="onTouched()"
           [disabled]="disabled()"
-          class="appearance-none block w-full px-4 py-3 border border-transparent bg-[#333333] placeholder-gray-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-vera-green focus:border-transparent sm:text-sm"
+          class="appearance-none block w-full px-4 py-3 border border-transparent bg-white dark:bg-[#333333] placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-vera-green focus:border-transparent sm:text-sm transition-colors"
           [ngClass]="{'pr-10': type() === 'password'}"
         />
         @if (type() === 'password') {

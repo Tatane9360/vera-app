@@ -3,6 +3,7 @@ module.exports = {
   content: [
     'apps/client/src/**/*.{html,ts}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
