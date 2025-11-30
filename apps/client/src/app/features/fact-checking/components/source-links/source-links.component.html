@@ -1,0 +1,20 @@
+<div *ngIf="links() && links().length > 0" class="mt-4 space-y-2">
+  <div class="h-px bg-black/10 my-3"></div>
+  <p class="text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Sources</p>
+  <div class="grid gap-2 sm:grid-cols-2">
+    <a *ngFor="let link of links()" 
+       [href]="link.url" 
+       target="_blank"
+       class="bg-white/60 hover:bg-white border border-black/5 rounded-lg p-3 transition-all duration-200 flex items-center gap-3 group"
+    >
+      <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm overflow-hidden flex-shrink-0">
+        <img [src]="link.favicon" [alt]="link.domain" class="w-5 h-5 object-contain" onerror="this.style.display='none'">
+        <div class="w-5 h-5 bg-gray-200 rounded-full" style="display:none" onload="this.previousElementSibling.style.display=='none' ? this.style.display='block' : ''"></div>
+      </div>
+      <div class="min-w-0 flex-1">
+        <p class="text-sm font-semibold text-gray-900 truncate group-hover:text-blue-700">{{ link.domain }}</p>
+        <p class="text-xs text-gray-500 truncate">{{ link.url }}</p>
+      </div>
+    </a>
+  </div>
+</div>

@@ -1,14 +1,11 @@
-<!-- Navigation Bar -->
 <nav class="bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
-      <!-- Logo -->
       <a routerLink="/" class="flex items-center gap-2 font-bold text-xl hover:text-gray-200 transition">
         <span class="text-2xl">🚀</span>
         <span>Compét</span>
       </a>
 
-      <!-- Navigation Links -->
       <div class="flex items-center gap-8">
         <a routerLink="/" 
            routerLinkActive="border-b-2 border-white"
@@ -16,13 +13,17 @@
            class="hover:text-gray-200 transition pb-1">
           Accueil
         </a>
+        <a routerLink="/fact-checking" 
+           routerLinkActive="border-b-2 border-white"
+           class="hover:text-gray-200 transition pb-1">
+          Vérification
+        </a>
         <a routerLink="/about" 
            routerLinkActive="border-b-2 border-white"
            class="hover:text-gray-200 transition pb-1">
           À Propos
         </a>
 
-        <!-- Afficher Dashboard si connecté -->
         <a *ngIf="isAuthenticated" 
            routerLink="/dashboard" 
            routerLinkActive="border-b-2 border-white"
@@ -30,13 +31,6 @@
           Dashboard
         </a>
 
-        <a routerLink="/contact" 
-           routerLinkActive="border-b-2 border-white"
-           class="hover:text-gray-200 transition pb-1">
-          Contact
-        </a>
-
-        <!-- Afficher Login si non connecté, sinon Email + Déconnexion -->
         <a *ngIf="!isAuthenticated" 
            routerLink="/login" 
            routerLinkActive="border-b-2 border-white"

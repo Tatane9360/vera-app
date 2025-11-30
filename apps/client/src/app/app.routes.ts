@@ -39,11 +39,11 @@ export const appRoutes: Route[] = [
       import('./features/dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTES),
   },
   {
-    path: 'contact',
+    path: 'fact-checking',
     loadChildren: () =>
-      import('./features/contact/contact.routes').then((m) => m.CONTACT_ROUTES),
+      import('./features/fact-checking/fact-checking.routes').then((m) => m.FACT_CHECKING_ROUTES),
   },
-  {    
+  {
     path: '**',
     redirectTo: '',    
   },
