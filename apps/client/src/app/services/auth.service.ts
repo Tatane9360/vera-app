@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient, User } from '@supabase/supabase-js';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from 'c:/Users/iorgadmin/Desktop/vera-app/apps/server/src/environments/environment';
+import { environment } from '@compet-website/environment';
 
 @Injectable({
   providedIn: 'root'

@@ -21,7 +21,8 @@
     "experimentalDecorators": true,
     "paths": {
       "@compet-website/shared-types": ["packages/shared-types/src/index.ts"],
-      "@compet-website/shared-types/*": ["packages/shared-types/src/*"]
+      "@compet-website/shared-types/*": ["packages/shared-types/src/*"],
+      "@compet-website/environment": ["apps/server/src/environments/environment.ts"]
     }
   }
 }

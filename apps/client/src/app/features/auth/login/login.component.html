@@ -1,38 +1,36 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen flex items-center justify-center bg-[#1c1c1c] py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full space-y-8">
-    <div>
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Connexion
+    <div class="text-center">
+      <h2 class="text-4xl font-normal text-white mb-2">
+        Connectez-vous
       </h2>
+      <p class="text-gray-400 text-sm">
+        Pour accédez au dashboard
+      </p>
     </div>
     
     <form class="mt-8 space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <div class="rounded-md shadow-sm -space-y-px">
-        <div>
-          <label for="email" class="sr-only">Email</label>
-          <input
-            id="email"
-            type="email"
-            formControlName="email"
-            required
-            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Email"
-          />
-        </div>
-        <div>
-          <label for="password" class="sr-only">Mot de passe</label>
-          <input
-            id="password"
-            type="password"
-            formControlName="password"
-            required
-            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Mot de passe"
-          />
-        </div>
+      <div class="space-y-4">
+        <app-input
+          id="email"
+          type="email"
+          label="Adresse email"
+          placeholder="email.gmail.com"
+          formControlName="email"
+          [error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched ? 'Email invalide' : null"
+        ></app-input>
+
+        <app-input
+          id="password"
+          type="password"
+          label="Mot de passe"
+          placeholder="Votre mot de passe"
+          formControlName="password"
+          [error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? 'Mot de passe requis' : null"
+        ></app-input>
       </div>
 
-      <div *ngIf="errorMessage" class="text-red-500 text-sm text-center bg-red-50 p-3 rounded">
+      <div *ngIf="errorMessage" class="text-red-400 text-sm text-center bg-red-900/20 p-3 rounded border border-red-900/50">
         {{ errorMessage }}
       </div>
 
@@ -40,18 +38,15 @@
         <button
           type="submit"
           [disabled]="loginForm.invalid || isLoading"
-          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50">
-          <span *ngIf="!isLoading">Se connecter</span>
+          class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-base font-medium rounded-lg text-gray-900 bg-vera-green hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-vera-green disabled:opacity-50 transition-colors">
+          <span *ngIf="!isLoading">Connexion</span>
           <span *ngIf="isLoading">Connexion...</span>
         </button>
       </div>
 
-      <div class="text-center space-y-2">
-        <a routerLink="/forgot-password" class="text-indigo-600 hover:text-indigo-500 text-sm block">
-          Mot de passe oublié ?
-        </a>
-        <a routerLink="/register" class="text-indigo-600 hover:text-indigo-500 text-sm block">
-          Pas encore de compte ? S'inscrire
+      <div class="text-center">
+        <a routerLink="/register" class="text-gray-400 text-sm hover:text-white transition-colors">
+          Pas encore de compte ? <span class="text-vera-green hover:underline">Inscrivez-vous</span>
         </a>
       </div>
     </form>

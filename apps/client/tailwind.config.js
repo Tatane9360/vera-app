@@ -4,7 +4,14 @@ module.exports = {
     'apps/client/src/**/*.{html,ts}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'vera-cream': '#FEF2E4',
+        'vera-green': '#DBF9BE',
+        'vera-pink': '#FFDEE0',
+        'vera-blue': '#B4D2FF',
+      },
+    },
   },
   plugins: [],
 };
