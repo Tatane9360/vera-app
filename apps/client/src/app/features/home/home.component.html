@@ -1,86 +1,47 @@
-<div class="min-h-screen bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 p-4">
-  <div class="max-w-4xl mx-auto">
-    <!-- Header -->
-    <div class="text-center mb-8">
-      <h1 class="text-5xl md:text-6xl font-bold text-white mb-2">
-        Compét Website
-      </h1>
-      <p class="text-xl text-gray-100">Angular + NestJS Integration</p>
-    </div>
+<div class="relative overflow-hidden font-sans pt-32 md:pt-40">
+  <section class="pb-16 md:pb-24">
+    <div class="container mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        
+        <!-- Text Content -->
+        <div class="text-center lg:text-left z-10">
+          <h1 class="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.1] text-primary dark:text-vera-cream mb-8">
+            Vera Web <span class="bg-vera-green dark:bg-lime-900 px-2 rounded-md inline-block">Le chatbot de confiance</span> <br class="hidden lg:block" />
+            pour vérifier les faits
+          </h1>
+          <p class="text-lg md:text-xl text-primary/80 dark:text-vera-cream/80 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light">
+            Un assistant intelligent conçu pour lutter contre la désinformation et t'aider à mieux comprendre le monde qui t'entoure.
+          </p>
 
-    <!-- Loading state -->
-    <div *ngIf="loading()" class="bg-white rounded-xl shadow-2xl p-8 text-center">
-      <div class="flex justify-center mb-4">
-        <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-purple-600"></div>
-      </div>
-      <p class="text-lg text-gray-600">Chargement des données...</p>
-    </div>
-
-    <!-- Error state -->
-    <div *ngIf="error() && !loading()" class="bg-red-100 border-l-4 border-red-500 p-6 rounded-lg mb-6">
-      <h3 class="font-bold text-red-700 mb-2">❌ Erreur</h3>
-      <p class="text-red-600 mb-4">{{ error() }}</p>
-      <button 
-        (click)="loadData()"
-        class="bg-red-600 text-white font-bold py-2 px-6 rounded hover:bg-red-700 transition"
-      >
-        Réessayer
-      </button>
-    </div>
-
-    <!-- Success state -->
-    <div *ngIf="apiData() && !loading() && !error()" class="space-y-6">
-      <!-- API Message Card -->
-      <div class="bg-white rounded-xl shadow-2xl p-8">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="text-3xl">✅</span>
-          <h2 class="text-2xl font-bold text-purple-600">Message du Serveur</h2>
-        </div>
-        <p class="text-lg text-gray-700 mb-4">{{ apiData()!.message }}</p>
-        <p class="text-sm text-gray-500">Timestamp: {{ apiData()!.timestamp | date:'medium' }}</p>
-      </div>
-
-      <!-- Stats Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl shadow-lg p-6 text-white">
-          <div class="text-4xl font-bold mb-2">{{ apiData()!.data.stats.totalUsers }}</div>
-          <p class="text-blue-100">Utilisateurs Total</p>
-        </div>
-        <div class="bg-gradient-to-br from-green-400 to-green-600 rounded-xl shadow-lg p-6 text-white">
-          <div class="text-4xl font-bold mb-2">{{ apiData()!.data.stats.activeUsers }}</div>
-          <p class="text-green-100">Utilisateurs Actifs</p>
-        </div>
-        <div class="bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl shadow-lg p-6 text-white">
-          <div class="text-2xl font-bold mb-2">{{ apiData()!.data.stats.serverUptime }}</div>
-          <p class="text-purple-100">Uptime du Serveur</p>
-        </div>
-      </div>
-
-      <!-- Users List -->
-      <div class="bg-white rounded-xl shadow-2xl p-8">
-        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-          <span class="text-2xl">👥</span>
-          Liste des Utilisateurs
-        </h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div *ngFor="let user of apiData()!.data.users" 
-               class="bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-purple-500 p-4 rounded-lg hover:shadow-md transition">
-            <h4 class="font-bold text-gray-800 text-lg">{{ user.name }}</h4>
-            <p class="text-gray-600">{{ user.email }}</p>
-            <p class="text-sm text-gray-500 mt-2">ID: {{ user.id }}</p>
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
+            <a class="bg-primary text-vera-cream dark:text-primary dark:bg-vera-cream font-medium py-4 px-8 rounded-full w-full sm:w-auto text-center hover:opacity-90 transition-opacity text-lg" href="#">
+              Parler à Vera
+            </a>
+            <a class="group font-medium py-3 px-6 rounded-full w-full sm:w-auto text-center flex items-center justify-center gap-2 text-primary dark:text-vera-cream hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-lg" href="#">
+              Regarder la démo
+              <span class="material-icons-outlined group-hover:translate-x-1 transition-transform">play_arrow</span>
+            </a>
           </div>
         </div>
-      </div>
 
-      <!-- Refresh Button -->
-      <div class="text-center">
-        <button 
-          (click)="loadData()"
-          class="bg-white text-purple-600 font-bold py-3 px-8 rounded-lg hover:shadow-lg transition duration-300 inline-block"
+        <!-- Image Section -->
+        <div 
+          class="relative flex items-center justify-center mt-12 lg:mt-0 perspective-1000"
+          (mousemove)="onMouseMove($event)"
+          (mouseleave)="onMouseLeave()"
         >
-          🔄 Rafraîchir les données
-        </button>
+          <!-- Decorative scribbles could go here if we had SVGs -->
+          <img 
+            [style.transform]="transformStyle()"
+            alt="Vera App Interface on two smartphones" 
+            class="relative z-10 max-w-full h-auto drop-shadow-2xl transition-transform duration-100 ease-out will-change-transform cursor-pointer" 
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDUGAZe5A2EwL-v2VjeO4zMel6X4_PKvNRHhN3tPDROxQDsPrvvxCG_reXNRV-WR9zi5-POf3wWsQ0vdqmKnM6S-qihRhGD73LvOgfJu5AeMFT-yv7w1eVAqsWd-7UzKsct4KaIzRuCvOLn_CHy7HwM9vIz9IYs-rOHIt_Qb6nSAjqeMXHGlYei5oxPR5cfCyFh0VNB66SslICuO3ActaQlBzV6T4N1VpbMM7BF6RiI9zxxsvNx8vdt9g0ykzt191AIx3h0M8x9os"
+          />
+        </div>
       </div>
     </div>
-  </div>
+  </section>
+  
+  <app-how-it-works></app-how-it-works>
+  <app-sources-section></app-sources-section>
 </div>

@@ -1,12 +1,16 @@
-<div class="flex flex-col h-screen bg-[#121212] text-white overflow-hidden">
+<div class="flex flex-col h-[100dvh] bg-vera-cream dark:bg-primary text-primary dark:text-vera-cream overflow-hidden relative font-sans">
+  <!-- Background Texture -->
+  <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIi8+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDAiIG9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4=');"></div>
+
   <!-- Header -->
-  <app-chat-header></app-chat-header>
+  <app-chat-header class="z-10 flex-shrink-0"></app-chat-header>
 
   <!-- Chat Area -->
-  <app-chat-messages [messages]="messages()"></app-chat-messages>
+  <app-chat-messages [messages]="messages()" class="flex-1 min-h-0 z-0"></app-chat-messages>
 
   <!-- Input Area -->
   <app-chat-input 
+    class="z-20 flex-shrink-0"
     (sendText)="onSendText($event)"
     (sendFile)="onSendFile($event)"
   ></app-chat-input>

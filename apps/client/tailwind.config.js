@@ -11,6 +11,14 @@ module.exports = {
         'vera-green': '#DBF9BE',
         'vera-pink': '#FFDEE0',
         'vera-blue': '#B4D2FF',
+        primary: "#232321",
+      },
+      fontFamily: {
+        display: ["Merriweather", "serif"],
+        sans: ["Roboto", "sans-serif"],
+      },
+      borderRadius: {
+        DEFAULT: "1.25rem",
       },
     },
   },

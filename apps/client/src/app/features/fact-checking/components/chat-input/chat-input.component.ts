@@ -39,5 +39,19 @@ export class ChatInputComponent {
     
     this.sendText.emit(text);
     this.inputText.set('');
+    
+    // Reset height
+    setTimeout(() => {
+      const textarea = document.querySelector('textarea');
+      if (textarea) {
+        textarea.style.height = 'auto';
+      }
+    });
+  }
+
+  adjustHeight(event: Event) {
+    const textarea = event.target as HTMLTextAreaElement;
+    textarea.style.height = 'auto';
+    textarea.style.height = Math.min(textarea.scrollHeight, 150) + 'px'; // Max height 150px
   }
 }
