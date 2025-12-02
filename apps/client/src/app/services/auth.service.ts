@@ -8,8 +8,9 @@ import { environment } from '@compet-website/environment';
 })
 export class AuthService {
   private supabase: SupabaseClient;
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
-  public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
+  // Initialize with undefined to indicate "loading" state
+  private currentUserSubject = new BehaviorSubject<User | null | undefined>(undefined);
+  public currentUser$: Observable<User | null | undefined> = this.currentUserSubject.asObservable();
 
   constructor() {
     this.supabase = createClient(
@@ -21,8 +22,12 @@ export class AuthService {
   }
 
   private async loadUser() {
-    const { data: { user } } = await this.supabase.auth.getUser();
-    this.currentUserSubject.next(user);
+    try {
+      const { data: { user } } = await this.supabase.auth.getUser();
+      this.currentUserSubject.next(user);
+    } catch (error) {
+      this.currentUserSubject.next(null);
+    }
 
     this.supabase.auth.onAuthStateChange((event, session) => {
       this.currentUserSubject.next(session?.user ?? null);
@@ -68,7 +73,7 @@ export class AuthService {
   }
 
   getCurrentUser(): User | null {
-    return this.currentUserSubject.value;
+    return this.currentUserSubject.value ?? null;
   }
 
   isAuthenticated(): boolean {

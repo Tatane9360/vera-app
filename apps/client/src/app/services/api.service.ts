@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IApiResponse } from '@compet-website/shared-types';
+import { IAnalyticsData, IApiResponse } from '@compet-website/shared-types';
 import { ApiResponseDto } from '../core/dtos/api.dto';
 
 @Injectable({
@@ -24,5 +24,11 @@ export class ApiService {
 
   getFormStatistics(formId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/forms/${formId}/statistics`);
+  }
+
+  getAnalyticsStats(startDate = '7daysAgo', endDate = 'today'): Observable<IAnalyticsData> {
+    return this.http.get<IAnalyticsData>(`${this.apiUrl}/analytics/stats`, {
+      params: { startDate, endDate }
+    });
   }
 }

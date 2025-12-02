@@ -1,35 +1,4 @@
-<nav class="absolute top-0 left-0 right-0 z-50 p-6">
-  <div class="container mx-auto flex items-center justify-between">
-    <!-- Logo -->
-    <a routerLink="/" class="font-display text-4xl font-bold tracking-tight text-primary dark:text-vera-cream">Vera</a>
-
-    <!-- Desktop Menu -->
-    <div class="hidden lg:flex items-center gap-10">
-      <a routerLink="/about" class="text-base font-medium text-primary dark:text-vera-cream hover:opacity-70 transition-opacity">Comment ça marche ?</a>
-      <a href="#" class="text-base font-medium text-primary dark:text-vera-cream hover:opacity-70 transition-opacity">Rencontrez l'équipe</a>
-      <a href="#" class="text-base font-medium text-primary dark:text-vera-cream hover:opacity-70 transition-opacity">FAQ</a>
-    </div>
-
-    <!-- Right Actions -->
-    <div class="flex items-center gap-6">
-       <!-- Auth Links -->
-       <ng-container *ngIf="isAuthenticated">
-          <a routerLink="/dashboard" class="text-sm font-medium text-primary dark:text-vera-cream hover:opacity-70">Dashboard</a>
-          <button (click)="logout()" class="text-sm font-medium text-red-600 hover:opacity-70">Déconnexion</button>
-       </ng-container>
-
-      <a routerLink="/fact-checking" class="hidden md:inline-flex bg-primary text-vera-cream dark:bg-vera-cream dark:text-primary font-medium py-3 px-8 rounded-full text-sm hover:opacity-90 transition-opacity">
-        Parler à Vera
-      </a>
-
-      <!-- Theme Toggle -->
-      <div class="flex items-center gap-3 text-sm font-medium text-primary dark:text-vera-cream">
-         <button (click)="themeService.darkMode.set(false)" [class.underline]="!themeService.darkMode()" [class.opacity-50]="themeService.darkMode()" class="decoration-1 underline-offset-4 hover:opacity-100 transition-opacity">Light</button>
-         <button (click)="themeService.darkMode.set(true)" [class.underline]="themeService.darkMode()" [class.opacity-50]="!themeService.darkMode()" class="decoration-1 underline-offset-4 hover:opacity-100 transition-opacity">Dark</button>
-      </div>
-    </div>
-  </div>
-</nav>
+<app-nav-bar></app-nav-bar>
 
 <!-- Page Content -->
 <main class="min-h-screen bg-vera-cream dark:bg-primary transition-colors duration-300">

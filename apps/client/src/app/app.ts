@@ -5,9 +5,10 @@ import { AuthService } from './services/auth.service';
 import { User } from '@supabase/supabase-js';
 import { IconComponent } from './shared/components/icon/icon.component';
 import { ThemeService } from './services/theme.service';
+import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 
 @Component({
-  imports: [RouterModule, CommonModule, IconComponent],
+  imports: [RouterModule, CommonModule, IconComponent, NavBarComponent],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -18,7 +19,7 @@ export class App implements OnInit {
   public themeService = inject(ThemeService);
 
   protected title = 'client';
-  user: User | null = null;
+  user: User | null | undefined = undefined;
 
   ngOnInit() {
     this.authService.currentUser$.subscribe(user => {

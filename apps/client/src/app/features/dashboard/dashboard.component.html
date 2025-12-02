@@ -1,48 +1,117 @@
-<div class="min-h-screen bg-gray-100">
-  <nav class="bg-white shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16">
-        <div class="flex items-center">
-          <h1 class="text-xl font-bold text-gray-900">Dashboard</h1>
+<div class="min-h-screen bg-vera-cream dark:bg-primary pt-24 pb-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300 font-sans">
+  
+  <div class="max-w-7xl mx-auto space-y-8">
+    
+    <!-- Welcome Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 transition-colors duration-300">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h1 class="font-display text-3xl md:text-4xl font-bold text-primary dark:text-vera-cream mb-2">
+            Dashboard
+          </h1>
+          <p class="text-gray-600 dark:text-gray-300 text-lg">
+            Bienvenue, <strong class="text-primary dark:text-vera-green">{{ (user$ | async)?.email }}</strong>
+          </p>
         </div>
+        <button 
+          (click)="logout()"
+          class="px-6 py-3 bg-gray-100 dark:bg-gray-700 text-primary dark:text-white rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium"
+        >
+          Se déconnecter
+        </button>
       </div>
     </div>
-  </nav>
 
-  <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <div class="px-4 py-6 sm:px-0">
-      <div class="border-4 border-dashed border-gray-200 rounded-lg p-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">Bienvenue !</h2>
-        <p class="text-gray-600">
-          Vous êtes connecté en tant que <strong>{{ user?.email }}</strong>
-        </p>
+    <!-- Analytics Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 transition-colors duration-300">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-full bg-vera-blue flex items-center justify-center text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+        </div>
+        <h2 class="font-display text-2xl font-bold text-primary dark:text-vera-cream">Statistiques du Site (7 derniers jours)</h2>
       </div>
 
-      <div class="mt-8 border-4 border-dashed border-gray-200 rounded-lg p-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">Intégration Google Forms</h2>
-        
-        <div class="flex gap-4 mb-4">
-          <input 
-            type="text" 
-            [(ngModel)]="formId" 
-            placeholder="ID du Formulaire Google"
-            class="flex-1 p-2 border border-gray-300 rounded"
-          >
+      <ng-container *ngIf="analyticsData$ | async as analytics">
+        <div *ngIf="analytics.loading" class="flex justify-center py-12">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-vera-blue"></div>
+        </div>
+
+        <div *ngIf="analytics.error" class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-300 px-6 py-4 rounded-xl mb-6">
+          {{ analytics.error }}
+        </div>
+
+        <div *ngIf="analytics.data" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <app-analytics-chart
+            title="Utilisateurs Actifs"
+            [labels]="analytics.data.labels"
+            [data]="analytics.data.datasets.activeUsers"
+            label="Utilisateurs"
+            color="#B4D2FF"
+            class="h-full"
+          ></app-analytics-chart>
+          
+          <app-analytics-chart
+            title="Vues de Page"
+            [labels]="analytics.data.labels"
+            [data]="analytics.data.datasets.pageViews"
+            label="Vues"
+            color="#DBF9BE"
+            class="h-full"
+          ></app-analytics-chart>
+
+          <app-analytics-chart
+            title="Sessions"
+            [labels]="analytics.data.labels"
+            [data]="analytics.data.datasets.sessions"
+            label="Sessions"
+            color="#FFDEE0"
+            class="h-full"
+          ></app-analytics-chart>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Integration Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 transition-colors duration-300">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-full bg-vera-green flex items-center justify-center text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+        </div>
+        <h2 class="font-display text-2xl font-bold text-primary dark:text-vera-cream">Statistiques Google Forms</h2>
+      </div>
+      
+      <ng-container *ngIf="statistics$ | async as stats">
+        <div class="flex flex-col md:flex-row gap-4 mb-8">
+          <div class="flex-1 relative">
+            <input 
+              type="text" 
+              [(ngModel)]="formId" 
+              placeholder="ID du Formulaire Google"
+              class="w-full bg-gray-50 dark:bg-gray-900 text-primary dark:text-white border border-gray-200 dark:border-gray-600 rounded-xl px-5 py-4 focus:ring-2 focus:ring-vera-green focus:border-transparent outline-none transition-all"
+            >
+          </div>
           <button 
-            (click)="fetchResponses()"
-            [disabled]="loading || !formId"
-            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+            (click)="onFormIdChange(formId)"
+            [disabled]="stats.loading || !formId"
+            class="bg-vera-green text-primary px-8 py-4 rounded-xl hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed font-bold transition-all shadow-lg hover:shadow-xl active:scale-95"
           >
-            {{ loading ? 'Chargement...' : 'Voir les réponses' }}
+            {{ stats.loading ? 'Chargement...' : 'Analyser les réponses' }}
           </button>
         </div>
         
-        <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          {{ error }}
+        <div *ngIf="stats.error" class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-300 px-6 py-4 rounded-xl mb-6 flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+          </svg>
+          {{ stats.error }}
         </div>
 
-        <div *ngIf="statistics" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-          <ng-container *ngFor="let question of statistics | keyvalue">
+        <div *ngIf="stats.data" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+          <ng-container *ngFor="let question of stats.data | keyvalue">
             <app-chart-card
               [title]="question.key"
               [data]="question.value"
@@ -50,7 +119,13 @@
             ></app-chart-card>
           </ng-container>
         </div>
-      </div>
+        
+        <!-- Empty State -->
+        <div *ngIf="!stats.data && !stats.loading && !stats.error" class="text-center py-12 opacity-50">
+          <p class="text-gray-500 dark:text-gray-400">Entrez un ID de formulaire pour voir les statistiques</p>
+        </div>
+      </ng-container>
     </div>
-  </main>
+
+  </div>
 </div>
