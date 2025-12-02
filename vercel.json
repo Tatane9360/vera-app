@@ -1,10 +1,11 @@
 {
-  "buildCommand": "npx nx build client --configuration=production",
+  "buildCommand": "npx nx build client --configuration=production && echo '--- DEBUG ---' && ls -R dist/apps/client && echo '--- END DEBUG ---'",
+  "outputDirectory": "dist/apps/client",
   "installCommand": "pnpm i",
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "index.html"
+      "destination": "/index.html"
     }
   ]
 }
