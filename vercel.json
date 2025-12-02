@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npx nx build client --configuration=production && echo '--- DEBUG ---' && find dist -type f -name 'index.html' && echo '--- END DEBUG ---'",
+  "buildCommand": "npx nx build client --configuration=production && echo '--- DEBUG ---' && ls -la /vercel/path0/dist/apps/client && echo '--- END DEBUG ---'",
   "outputDirectory": "dist/apps/client",
   "installCommand": "pnpm i",
   "rewrites": [
