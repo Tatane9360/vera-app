@@ -23,7 +23,8 @@ node_modules
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.angular/cache
+.angular
+
 
 # misc
 /.sass-cache
@@ -43,3 +44,6 @@ Thumbs.db
 .nx/workspace-data
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
+
+# credentials
+/apps/server/google-credentials.json
