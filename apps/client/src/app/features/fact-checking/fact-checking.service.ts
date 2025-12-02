@@ -2,12 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AnalyzeResponseDto, AnalyzeUrlDto, VerifyClaimDto, VerifyResponseDto } from '@compet-website/shared-types';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FactCheckingService {
-  private apiUrl = 'http://localhost:3000/api/fact-checking'; // Assuming global prefix is api, need to verify
+  private apiUrl = `${environment.apiUrl}/fact-checking`; 
   private http = inject(HttpClient);
 
   analyzeImage(file: File): Observable<AnalyzeResponseDto> {
