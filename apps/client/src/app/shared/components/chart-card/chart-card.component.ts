@@ -10,8 +10,8 @@ Chart.register(...registerables);
   standalone: true,
   imports: [CommonModule, BaseChartDirective],
   template: `
-    <div class="bg-white p-6 rounded-lg shadow-md h-full flex flex-col">
-      <h3 class="font-bold text-lg mb-4 text-gray-800 border-b pb-2 min-h-[3.5rem] flex items-center">{{ title }}</h3>
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg h-full flex flex-col border border-gray-100 dark:border-gray-700 transition-colors duration-300">
+      <h3 class="font-display font-bold text-lg mb-6 text-primary dark:text-vera-cream border-b border-gray-100 dark:border-gray-700 pb-4 min-h-[4rem] flex items-center leading-tight">{{ title }}</h3>
       <div class="flex-grow flex items-center justify-center relative min-h-[250px]">
         <canvas baseChart
           [data]="chartData"

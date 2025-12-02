@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatMessage } from '../../models/chat-message.model';
 import { SourceLinksComponent } from '../source-links/source-links.component';
@@ -12,4 +12,28 @@ import { SourceLinksComponent } from '../source-links/source-links.component';
 })
 export class ChatMessageComponent {
   message = input.required<ChatMessage>();
+  copied = signal(false);
+
+  async shareMessage() {
+    const content = this.message().content;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Vérification Vera',
+          text: content,
+        });
+      } catch (err) {
+        console.error('Error sharing:', err);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(content);
+        this.copied.set(true);
+        setTimeout(() => this.copied.set(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    }
+  }
 }
