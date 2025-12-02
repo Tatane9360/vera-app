@@ -43,10 +43,18 @@ export class FactCheckingService {
 
   async analyzeUrl(url: string): Promise<string> {
     try {
-      // 1. Fetch URL content
+      if (url.includes('youtube.com') || url.includes('youtu.be')) {
+        try {
+          const oembedUrl = `https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`;
+          const { data } = await axios.get(oembedUrl);
+          return data.title;
+        } catch (e) {
+          console.warn('Failed to get YouTube oEmbed, falling back to standard scraping', e);
+        }
+      }
+
       const { data } = await axios.get(url);
       
-      // 2. Parse HTML to extract metadata (title and description)
       const $ = cheerio.load(data);
       
       const title = $('title').text().trim();
@@ -54,18 +62,15 @@ export class FactCheckingService {
       const ogTitle = $('meta[property="og:title"]').attr('content')?.trim() || '';
       const ogDescription = $('meta[property="og:description"]').attr('content')?.trim() || '';
 
-      // Prioritize OG tags or standard tags
       const finalTitle = ogTitle || title;
       const finalDescription = ogDescription || metaDescription;
 
-      // Construct the claim from metadata
       let claim = finalTitle;
       if (finalDescription) {
         claim += `. ${finalDescription}`;
       }
 
       if (!claim) {
-         // Fallback if no metadata found, take first paragraph
          claim = $('p').first().text().trim().substring(0, 200);
       }
 
@@ -86,7 +91,7 @@ export class FactCheckingService {
 
     try {
       const response = await axios.post(apiUrl, {
-        userId: 'vera-app-user', // TODO: Use real user ID when auth is implemented
+        userId: 'vera-app-user',
         query: query
       }, {
         headers: {

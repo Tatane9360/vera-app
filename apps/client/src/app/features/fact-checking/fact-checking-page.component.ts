@@ -25,9 +25,8 @@ export class FactCheckingPageComponent {
   isLoading = signal(false);
 
   onSendText(text: string) {
-    // Check if URL
-    const urlRegex = /^(http|https):\/\/[^ "]+$/;
-    if (urlRegex.test(text)) {
+    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
+    if (youtubeRegex.test(text)) {
       this.addMessage('user', text, 'url');
       this.processUrl(text);
     } else {
@@ -82,11 +81,13 @@ export class FactCheckingPageComponent {
       },
       error: () => {
         this.removeMessage(loadingMsgId);
-        this.addMessage('vera', 'Désolé, une erreur est survenue lors de l\'analyse du lien.', 'text');
+        this.addMessage('vera', 'Désolé, une erreur est survenue lors de l\'analyse du lien YouTube.', 'text');
         this.isLoading.set(false);
       }
     });
   }
+
+
 
   processText(text: string) {
     this.isLoading.set(true);
