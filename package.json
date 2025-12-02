@@ -4,7 +4,6 @@
   "license": "MIT",
   "packageManager": "pnpm@10.23.0",
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "serve:client": "nx run client:serve",
     "serve:server": "nx run server:serve",
     "build": "nx run-many -t build",
