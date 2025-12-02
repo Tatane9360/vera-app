@@ -1,19 +1,18 @@
 {
-  "version": 2,
-  "public": true,
   "builds": [
     {
-      "src": "package.json",
+      "src": "apps/client/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist/apps/client/browser"
+        "distDir": "dist/apps/client"
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/apps/client/$1"
     }
-  ]
+  ],
+  "outputDirectory": "dist/apps/client"
 }
