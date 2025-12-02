@@ -1,18 +1,11 @@
 {
-  "builds": [
-    {
-      "src": "apps/client/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist/apps/client"
-      }
-    }
-  ],
+  "buildCommand": "npx nx build client --configuration=production && cp -r dist/apps/client/browser/. dist/apps/client/",
+  "outputDirectory": "dist/apps/client",
+  "installCommand": "pnpm i",
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/apps/client/$1"
+      "destination": "/index.html"
     }
-  ],
-  "outputDirectory": "dist/apps/client"
+  ]
 }
