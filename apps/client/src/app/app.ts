@@ -6,9 +6,10 @@ import { User } from '@supabase/supabase-js';
 import { IconComponent } from './shared/components/icon/icon.component';
 import { ThemeService } from './services/theme.service';
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
 
 @Component({
-  imports: [RouterModule, CommonModule, IconComponent, NavBarComponent],
+  imports: [RouterModule, CommonModule, IconComponent, NavBarComponent, FooterComponent],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
