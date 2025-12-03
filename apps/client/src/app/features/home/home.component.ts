@@ -5,13 +5,33 @@ import { ApiService } from '../../services/api.service';
 import { ApiResponseDto } from '../../core/dtos/api.dto';
 import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
 import { SourcesSectionComponent } from './components/sources-section/sources-section.component';
+import { InViewDirective } from '../../shared/directives/in-view.directive';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HowItWorksComponent, SourcesSectionComponent],
+  imports: [CommonModule, HowItWorksComponent, SourcesSectionComponent, InViewDirective, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
+  styles: [`
+    /* Highlighter Effect */
+    .highlighter-effect {
+      background-image: linear-gradient(to right, #DBF9BE, #DBF9BE); 
+      background-size: 0% 100%;
+      background-repeat: no-repeat;
+      transition: background-size 2s cubic-bezier(0.22, 1, 0.36, 1);
+      padding: 0 0.2em; 
+    }
+    
+    .highlighter-effect.in-view {
+      background-size: 100% 100%;
+    }
+
+    :host-context(.dark) .highlighter-effect {
+      background-image: linear-gradient(to right, #14532d, #14532d); 
+    }
+  `]
 })
 export class HomeComponent {
   private apiService = inject(ApiService);
@@ -55,8 +75,6 @@ export class HomeComponent {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    // Calculate rotation based on mouse position
-    // Max rotation: 15 degrees
     const rotateX = ((y - centerY) / centerY) * -10; 
     const rotateY = ((x - centerX) / centerX) * 10;
 
