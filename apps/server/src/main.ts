@@ -14,14 +14,22 @@ async function bootstrap() {
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   
-  // Enable CORS for Angular frontend
   const allowedOrigins = process.env.CORS_ORIGIN 
     ? process.env.CORS_ORIGIN.split(',')
     : [
         'http://localhost:4200',
         'https://vera-app-client.vercel.app',
-        /\.vercel\.app$/, // Allow all Vercel preview deployments
+        /\.vercel\.app$/,
       ];
+  
+  Logger.log('🔒 CORS Configuration:');
+  allowedOrigins.forEach((origin) => {
+    if (origin instanceof RegExp) {
+      Logger.log(`   ✓ Pattern: ${origin.toString()}`);
+    } else {
+      Logger.log(`   ✓ ${origin}`);
+    }
+  });
   
   app.enableCors({
     origin: allowedOrigins,
