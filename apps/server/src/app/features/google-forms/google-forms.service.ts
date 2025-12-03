@@ -11,9 +11,9 @@ export class GoogleFormsService {
   constructor() {
     try {
       // Check if credentials are provided via environment variable (Railway)
-      if (process.env.GOOGLE_CREDENTIALS) {
-        this.logger.log('Using Google credentials from environment variable');
-        const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+      if (process.env.GOOGLE_CREDENTIALS_JSON) {
+        this.logger.log('✅ Using Google credentials from GOOGLE_CREDENTIALS_JSON environment variable');
+        const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
         
         this.auth = new google.auth.GoogleAuth({
           credentials: credentials,
