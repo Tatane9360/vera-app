@@ -7,7 +7,7 @@ import { InViewDirective } from '../../../../shared/directives/in-view.directive
   standalone: true,
   imports: [CommonModule, InViewDirective],
   template: `
-    <section class="py-32 bg-vera-green dark:bg-lime-900 transition-colors duration-300 overflow-hidden">
+    <section class="py-32 bg-vera-green dark:bg-lime-800 transition-colors duration-300 overflow-hidden">
       <div class="container mx-auto px-4">
         <!-- Header -->
         <div class="text-center mb-24">

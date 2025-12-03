@@ -18,7 +18,22 @@ export class NavBarComponent {
   private router = inject(Router);
 
   isScrolled = signal(false);
+  isMobileMenuOpen = signal(false);
   user = signal<User | null | undefined>(undefined);
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen.update(v => !v);
+    if (this.isMobileMenuOpen()) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen.set(false);
+    document.body.style.overflow = '';
+  }
 
   constructor() {
     this.authService.currentUser$.subscribe(u => this.user.set(u));
