@@ -1,6 +1,6 @@
 {
-  "buildCommand": "npx nx build client --configuration=production && echo '--- DEBUG ---' && ls -la /vercel/path0/dist/apps/client && echo '--- END DEBUG ---'",
-  "outputDirectory": "dist/apps/client",
+  "buildCommand": "npx nx build client --configuration=production",
+  "outputDirectory": "dist/apps/client/browser",
   "installCommand": "pnpm i",
   "rewrites": [
     {
