@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
 import { IAnalyticsData, IAnalyticsResponse } from '@compet-website/shared-types';
 import { ConfigService } from '@nestjs/config';
+import * as path from 'path';
 
 @Injectable()
 export class AnalyticsService {
@@ -9,7 +10,21 @@ export class AnalyticsService {
   private propertyId: string | undefined;
 
   constructor(private configService: ConfigService) {
-    this.analyticsDataClient = new BetaAnalyticsDataClient();
+    const googleCredentialsJson = this.configService.get<string>('GOOGLE_CREDENTIALS_JSON');
+    let authOptions: any = {};
+
+    if (googleCredentialsJson) {
+      try {
+        authOptions.credentials = JSON.parse(googleCredentialsJson);
+      } catch (e) {
+        console.error('Failed to parse GOOGLE_CREDENTIALS_JSON', e);
+      }
+    } else {
+      // Fallback to local file for development
+      authOptions.keyFilename = path.join(process.cwd(), 'apps/server/google-credentials.json');
+    }
+
+    this.analyticsDataClient = new BetaAnalyticsDataClient(authOptions);
     this.propertyId = this.configService.get<string>('GA_PROPERTY_ID');
   }
 
