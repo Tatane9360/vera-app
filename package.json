@@ -6,7 +6,9 @@
   "scripts": {
     "serve:client": "nx run client:serve",
     "serve:server": "nx run server:serve",
-    "build": "nx run-many -t build",
+    "build": "nx run client:build:production",
+    "build:all": "nx run-many -t build",
+    "build:client": "nx run client:build:production",
     "test": "nx run-many -t test"
   },
   "private": true,

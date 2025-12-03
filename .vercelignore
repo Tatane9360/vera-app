@@ -1,0 +1,32 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Testing
+coverage
+test-output
+
+# Build cache
+.nx
+.angular
+tmp
+
+# Development
+*.log
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Server app (not needed for frontend deployment)
+apps/server
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
