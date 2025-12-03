@@ -1,27 +1,27 @@
-# Dependencies
-node_modules
-.pnp
-.pnp.js
-
 # Testing
 coverage
 test-output
+*.spec.ts
+*.test.ts
 
 # Build cache
-.nx
+.nx/cache
 .angular
 tmp
 
-# Development
+# Development files
 *.log
-.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# Server app (not needed for frontend deployment)
-apps/server
+# Server source code (keep configs for Nx graph)
+apps/server/src
+apps/server/dist
+apps/server/node_modules
+apps/server-e2e/src
+apps/server-e2e/node_modules
 
 # IDE
 .vscode
@@ -30,3 +30,8 @@ apps/server
 *.swo
 *~
 .DS_Store
+
+# Documentation
+README.md
+AGENTS.md
+gio_readme.md
