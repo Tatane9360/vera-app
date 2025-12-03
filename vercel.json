@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npx nx build client --configuration=production && cp -r dist/apps/client/browser/* dist/apps/client/ && rm -rf dist/apps/client/browser",
+  "buildCommand": "npx nx build client --configuration=production && echo '=== LISTING dist/apps/client ===' && ls -la dist/apps/client && echo '=== END LISTING ===' && if [ -d 'dist/apps/client/browser' ]; then cp -r dist/apps/client/browser/* dist/apps/client/ && rm -rf dist/apps/client/browser; fi",
   "outputDirectory": "dist/apps/client",
   "installCommand": "pnpm i",
   "rewrites": [
