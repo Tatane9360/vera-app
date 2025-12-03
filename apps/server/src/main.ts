@@ -11,7 +11,7 @@ async function bootstrap() {
   // 1. Définition de la liste de base (Dev & Production spécifique)
   const baseOrigins: (string | RegExp)[] = [
     'http://localhost:4200',
-    // Assurez-vous d'ajouter ici TOUTES les versions (avec/sans slash, HTTP/HTTPS) si vous avez un doute
+    'http://localhost:4200/',
     'https://vera-app-client.vercel.app',
     'https://vera-app-client.vercel.app/',
     /\.vercel\.app$/,
@@ -23,6 +23,8 @@ async function bootstrap() {
     : [];
 
   // 3. Combinaison des deux listes
+  console.log('Base Origins:', baseOrigins);
+  console.log('Env Origins:', envOrigins);
   const allowedOrigins: (string | RegExp)[] = [...baseOrigins, ...envOrigins];
 
   Logger.log('🔒 CORS Configuration:');
