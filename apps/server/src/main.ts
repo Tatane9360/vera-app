@@ -15,10 +15,19 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix);
   
   // Enable CORS for Angular frontend
+  const allowedOrigins = process.env.CORS_ORIGIN 
+    ? process.env.CORS_ORIGIN.split(',')
+    : [
+        'http://localhost:4200',
+        'https://vera-app-client.vercel.app',
+        /\.vercel\.app$/, // Allow all Vercel preview deployments
+      ];
+  
   app.enableCors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:4200',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    origin: allowedOrigins,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
+    allowedHeaders: 'Content-Type,Accept,Authorization',
   });
   
   const port = process.env.PORT || 3000;
