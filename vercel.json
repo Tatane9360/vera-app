@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "pnpm run build",
+  "buildCommand": "pnpm -w run build",
   "outputDirectory": "dist/apps/client/browser",
   "installCommand": "pnpm install",
   "framework": null,
