@@ -10,17 +10,36 @@ export class GoogleFormsService {
 
   constructor() {
     try {
-      const keyFilePath = path.join(process.cwd(), 'apps/server/google-credentials.json');
-      
-      this.auth = new google.auth.GoogleAuth({
-        keyFile: keyFilePath,
-        scopes: ['https://www.googleapis.com/auth/forms.responses.readonly', 'https://www.googleapis.com/auth/forms.body.readonly'],
-      });
+      // Check if credentials are provided via environment variable (Railway)
+      if (process.env.GOOGLE_CREDENTIALS) {
+        this.logger.log('Using Google credentials from environment variable');
+        const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+        
+        this.auth = new google.auth.GoogleAuth({
+          credentials: credentials,
+          scopes: [
+            'https://www.googleapis.com/auth/forms.responses.readonly',
+            'https://www.googleapis.com/auth/forms.body.readonly'
+          ],
+        });
+      } else {
+        // Fallback to local file (development)
+        this.logger.log('Using Google credentials from local file');
+        const keyFilePath = path.join(process.cwd(), 'apps/server/google-credentials.json');
+        
+        this.auth = new google.auth.GoogleAuth({
+          keyFile: keyFilePath,
+          scopes: [
+            'https://www.googleapis.com/auth/forms.responses.readonly',
+            'https://www.googleapis.com/auth/forms.body.readonly'
+          ],
+        });
+      }
 
       this.forms = google.forms({ version: 'v1', auth: this.auth });
-      this.logger.log('Google Forms Service initialized');
+      this.logger.log('✅ Google Forms Service initialized successfully');
     } catch (error) {
-      this.logger.error('Failed to initialize Google Forms Service', error);
+      this.logger.error('❌ Failed to initialize Google Forms Service', error);
     }
   }
 
