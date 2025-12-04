@@ -47,7 +47,7 @@ export class NavBarComponent {
 
   async logout() {
     await this.authService.signOut();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/tetan_aime_coder']);
   }
 
   get isAuthenticated(): boolean {

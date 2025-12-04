@@ -35,7 +35,7 @@ import { User } from '@supabase/supabase-js';
       <!-- Navigation -->
       <nav class="flex-1 px-4 space-y-2 mt-4">
         <a
-          routerLink="/dashboard"
+          routerLink="/flo_le_meilleur_prof"
           routerLinkActive="bg-gray-800 text-white"
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="onClose()"
@@ -49,7 +49,7 @@ import { User } from '@supabase/supabase-js';
         </a>
 
         <a
-          routerLink="/dashboard/survey-data"
+          routerLink="/flo_le_meilleur_prof/survey-data"
           routerLinkActive="bg-gray-800 text-white"
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="onClose()"

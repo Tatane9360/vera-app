@@ -37,15 +37,15 @@ export class LoginComponent {
     this.errorMessage = '';
 
     const { email, password } = this.loginForm.value;
-    
+
     const { data, error } = await this.authService.signIn(email, password);
-    
+
     this.isLoading = false;
 
     if (error) {
       this.errorMessage = 'Email ou mot de passe incorrect';
     } else {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/flo_le_meilleur_prof']);
     }
   }
 }

@@ -70,6 +70,6 @@ export class DashboardComponent {
 
   async logout() {
     await this.authService.signOut();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/tetan_aime_coder']);
   }
 }
