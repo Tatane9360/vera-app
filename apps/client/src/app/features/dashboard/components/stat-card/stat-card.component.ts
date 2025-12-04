@@ -1,6 +1,5 @@
 import {
   Component,
-  computed,
   input,
   ChangeDetectionStrategy,
 } from '@angular/core';
@@ -33,20 +32,6 @@ import { CommonModule } from '@angular/common';
             <span>{{ percentage() }}%</span>
           </div>
         </div>
-
-        <div class="w-20 h-10 md:w-24 md:h-12 text-vera-green">
-          <!-- Simple Sparkline SVG -->
-          <svg viewBox="0 0 100 50" class="w-full h-full overflow-visible">
-            <path
-              [attr.d]="sparklinePath()"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
       </div>
     </div>
   `,
@@ -56,26 +41,4 @@ export class StatCardComponent {
   value = input.required<string>();
   percentage = input.required<number>();
   data = input<number[]>([]);
-
-  sparklinePath = computed(() => {
-    const data = this.data();
-    if (!data || data.length === 0) {
-      return 'M0 40 Q 20 40, 30 30 T 60 20 T 100 5'; 
-    }
-
-    const width = 100;
-    const height = 50;
-    const max = Math.max(...data);
-    const min = Math.min(...data);
-    const range = max - min || 1;
-
-    const points = data.map((val, index) => {
-      const x = (index / (data.length - 1)) * width;
-      const y = height - ((val - min) / range) * height * 0.8 - 5;
-      return `${x},${y}`;
-    });
-
-    // Simple line connecting points
-    return `M ${points.join(' L ')}`;
-  });
 }

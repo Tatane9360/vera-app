@@ -39,7 +39,11 @@
       ></div>
 
       <!-- Logo -->
-      <app-icon icon="logovVert" [width]="18" [height]="18"></app-icon>
+      <app-icon 
+        [icon]="themeService.darkMode() ? 'logovVert' : 'logov'" 
+        [width]="18" 
+        [height]="18"
+      ></app-icon>
     </div>
 
     <!-- Standard Message Bubble -->

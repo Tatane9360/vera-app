@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../services/auth.service';
 import { ApiService } from '../../../../services/api.service';
@@ -10,6 +10,12 @@ interface Period {
   label: string;
   value: string;
   startDate: string;
+}
+
+interface Question {
+  id: string;
+  question: string;
+  createdAt: string;
 }
 
 @Component({
@@ -59,10 +65,74 @@ interface Period {
           [data]="stat.data"
         ></app-stat-card>
       </div>
+
+      <!-- Questions Section -->
+      <div class="mt-8">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl md:text-2xl font-bold text-white">
+            Questions des utilisateurs
+          </h2>
+          <span class="text-sm text-gray-400" *ngIf="questionsData">
+            Total: {{ questionsData.total }}
+          </span>
+        </div>
+
+        <!-- Questions List -->
+        <div class="space-y-3">
+          <div
+            *ngIf="!questionsData || questionsData.data.length === 0"
+            class="bg-[#1E1E1E] border border-gray-800 rounded-lg p-6 text-center"
+          >
+            <p class="text-gray-400">Aucune question pour le moment</p>
+          </div>
+
+          <div
+            *ngFor="let question of questionsData?.data"
+            class="bg-[#1E1E1E] border border-gray-800 rounded-lg p-4 hover:border-gray-700 transition-colors"
+          >
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+              <p class="text-white text-sm md:text-base flex-1">
+                {{ question.question }}
+              </p>
+              <span class="text-xs text-gray-500">
+                {{ formatDate(question.createdAt) }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div
+          *ngIf="questionsData && questionsData.total > pageSize"
+          class="flex items-center justify-center gap-2 mt-6"
+        >
+          <button
+            (click)="previousPage()"
+            [disabled]="currentPage === 1"
+            [class.opacity-50]="currentPage === 1"
+            [class.cursor-not-allowed]="currentPage === 1"
+            class="px-4 py-2 bg-[#1E1E1E] border border-gray-800 rounded-lg text-white hover:border-gray-700 transition-colors disabled:hover:border-gray-800"
+          >
+            Précédent
+          </button>
+          <span class="text-gray-400 text-sm">
+            Page {{ currentPage }} / {{ totalPages }}
+          </span>
+          <button
+            (click)="nextPage()"
+            [disabled]="currentPage >= totalPages"
+            [class.opacity-50]="currentPage >= totalPages"
+            [class.cursor-not-allowed]="currentPage >= totalPages"
+            class="px-4 py-2 bg-[#1E1E1E] border border-gray-800 rounded-lg text-white hover:border-gray-700 transition-colors disabled:hover:border-gray-800"
+          >
+            Suivant
+          </button>
+        </div>
+      </div>
     </div>
   `,
 })
-export class DashboardHomeComponent {
+export class DashboardHomeComponent implements OnInit {
   private authService = inject(AuthService);
   private apiService = inject(ApiService);
 
@@ -83,9 +153,9 @@ export class DashboardHomeComponent {
       this.apiService.getAnalyticsStats(period.startDate, 'today')
     ),
     map((data) => {
-      const activeUsers = data.datasets.activeUsers.reduce((a, b) => a + b, 0);
-      const pageViews = data.datasets.pageViews.reduce((a, b) => a + b, 0);
-      const sessions = data.datasets.sessions.reduce((a, b) => a + b, 0);
+      const activeUsers = data.datasets.activeUsers.reduce((a: number, b: number) => a + b, 0);
+      const pageViews = data.datasets.pageViews.reduce((a: number, b: number) => a + b, 0);
+      const sessions = data.datasets.sessions.reduce((a: number, b: number) => a + b, 0);
 
       return [
         {
@@ -109,6 +179,67 @@ export class DashboardHomeComponent {
       ];
     })
   );
+
+  // Questions data
+  questionsData: { data: Question[]; total: number } | null = null;
+  currentPage = 1;
+  pageSize = 10;
+
+  get totalPages(): number {
+    return this.questionsData
+      ? Math.ceil(this.questionsData.total / this.pageSize)
+      : 1;
+  }
+
+  ngOnInit() {
+    this.loadQuestions();
+  }
+
+  loadQuestions() {
+    this.apiService.getQuestions(this.currentPage, this.pageSize).subscribe({
+      next: (data) => {
+        this.questionsData = data;
+        console.log('Questions chargées:', data);
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des questions:', error);
+      },
+    });
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.loadQuestions();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadQuestions();
+    }
+  }
+
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMs = now.getTime() - date.getTime();
+    const diffInMinutes = Math.floor(diffInMs / 60000);
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+
+    if (diffInMinutes < 1) return "À l'instant";
+    if (diffInMinutes < 60) return `Il y a ${diffInMinutes} min`;
+    if (diffInHours < 24) return `Il y a ${diffInHours}h`;
+    if (diffInDays < 7) return `Il y a ${diffInDays}j`;
+
+    return date.toLocaleDateString('fr-FR', {
+      day: 'numeric',
+      month: 'short',
+      year: date.getFullYear() !== now.getFullYear() ? 'numeric' : undefined,
+    });
+  }
 
   setPeriod(period: Period) {
     this.selectedPeriod = period;

@@ -32,4 +32,30 @@ export class ApiService {
       params: { startDate, endDate }
     });
   }
+
+  saveQuestion(question: string) {
+    console.log('Envoi de la question au serveur:', question); 
+    return this.http.post(`${environment.apiUrl}/questions`, { question });
+  }
+
+  getQuestions(page = 1, limit = 10) {
+    console.log('Récupération des questions, page:', page); 
+    return this.http.get<{
+      data: {id: string, question: string, createdAt: string}[],
+      total: number
+    }>(`${environment.apiUrl}/questions`, {
+      params: {
+        page: page.toString(),
+        limit: limit.toString()
+      } 
+    });
+  }
+
+  getAllQuestions() {
+    console.log('Récupération de toutes les questions'); 
+    return this.http.get<{
+      data: {id: string, question: string, createdAt: string}[],
+      total: number
+    }>(`${environment.apiUrl}/questions/all`);
+  }
 }

@@ -1,4 +1,3 @@
-// src/environments/environment.ts
 export const environment = {
   production: false,
   supabaseUrl: 'https://pydevazrwdzouhiakidn.supabase.co',

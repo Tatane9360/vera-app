@@ -1,8 +1,9 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatMessage } from '../../models/chat-message.model';
 import { SourceLinksComponent } from '../source-links/source-links.component';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
+import { ThemeService } from '../../../../services/theme.service';
 
 @Component({
   selector: 'app-chat-message',
@@ -14,6 +15,7 @@ import { IconComponent } from '../../../../shared/components/icon/icon.component
 export class ChatMessageComponent {
   message = input.required<ChatMessage>();
   copied = signal(false);
+  themeService = inject(ThemeService);
 
   async shareMessage() {
     const content = this.message().content;

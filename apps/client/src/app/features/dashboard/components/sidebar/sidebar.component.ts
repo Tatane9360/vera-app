@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { User } from '@supabase/supabase-js';
-
+import { IconComponent } from '../../../../shared/components/icon/icon.component';
+  
 @Component({
   selector: 'app-dashboard-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, IconComponent],
   template: `
     <aside
       class="fixed inset-y-0 left-0 z-50 w-64 bg-[#111111] border-r border-gray-800 flex flex-col text-gray-400 font-sans transition-transform duration-300 ease-in-out transform md:translate-x-0"
@@ -14,14 +15,14 @@ import { User } from '@supabase/supabase-js';
     >
       <!-- Logo -->
       <div class="p-6 flex items-center justify-between text-white">
-        <div class="flex items-center gap-3">
-          <div
-            class="w-8 h-8 bg-vera-green rounded-lg flex items-center justify-center text-black font-bold text-xl"
+        <a routerLink="/" (click)="onClose()" class="flex items-center gap-3 cursor-pointer">
+          <app-icon
+            [icon]="'logoVeraWhite'"
+            [width]="99"
+            [height]="31"
           >
-            V
-          </div>
-          <span class="font-bold text-xl tracking-wide">Vera</span>
-        </div>
+          </app-icon>
+        </a>
 
         <!-- Close Button (Mobile) -->
         <button
