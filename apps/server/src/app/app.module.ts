@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { FactCheckingModule } from './features/fact-checking/fact-checking.module';
 import { GoogleFormsModule } from './features/google-forms/google-forms.module';
 import { AnalyticsModule } from './features/analytics/analytics.module';
+import { QuestionsController } from '../questions/questions.controller';
 
 @Module({
   imports: [
@@ -12,10 +13,10 @@ import { AnalyticsModule } from './features/analytics/analytics.module';
       isGlobal: true,
     }),
     FactCheckingModule, 
-    GoogleFormsModule, 
+    GoogleFormsModule,
     AnalyticsModule
   ],
-  controllers: [AppController],
+  controllers: [AppController, QuestionsController],
   providers: [AppService],
 })
 export class AppModule {}

@@ -127,5 +127,67 @@
       </ng-container>
     </div>
 
+
+    <!-- Section des questions -->
+<div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 transition-colors duration-300 mt-8">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-primary dark:text-vera-cream">Historique des questions</h2>
+    <div class="text-sm text-gray-500 dark:text-gray-400">
+      {{ totalQuestions }} message(s) en base de données
+    </div>
+  </div>
+  
+  <!-- Liste des questions -->
+  <div class="space-y-4 mb-6">
+    <div *ngFor="let q of questions" class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+      <p class="text-gray-800 dark:text-gray-200">{{ q.question }}</p>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        {{ q.createdAt | date:'medium' }}
+      </p>
+    </div>
+    
+    <div *ngIf="questions.length === 0 && !loading" class="text-center py-8 text-gray-500 dark:text-gray-400">
+      Aucune question trouvée.
+    </div>
+    
+    <div *ngIf="loading" class="text-center py-8">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-vera-blue mx-auto"></div>
+    </div>
+  </div>
+  
+  <!-- Pagination -->
+  <div *ngIf="totalPages > 1" class="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700">
+    <button 
+      (click)="onPageChange(currentPage - 1)" 
+      [disabled]="currentPage === 1"
+      class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 disabled:opacity-50"
+    >
+      Précédent
+    </button>
+    
+    <div class="flex space-x-2">
+      <button 
+        *ngFor="let page of pages" 
+        (click)="onPageChange(page)"
+        [class.bg-vera-blue]="page === currentPage"
+        [class.text-white]="page === currentPage"
+        [class.text-gray-700]="page !== currentPage"
+        class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600"
+      >
+        {{ page }}
+      </button>
+    </div>
+    
+    <button 
+      (click)="onPageChange(currentPage + 1)" 
+      [disabled]="currentPage === totalPages"
+      class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 disabled:opacity-50"
+    >
+      Suivant
+    </button>
+  </div>
+</div>
+
+
   </div>
 </div>

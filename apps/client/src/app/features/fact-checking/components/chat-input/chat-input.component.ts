@@ -1,6 +1,7 @@
-import { Component, output, viewChild, signal, ElementRef } from '@angular/core';
+import { Component, output, viewChild, signal, ElementRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../../../../services/api.service';
 
 @Component({
   selector: 'app-chat-input',
@@ -10,6 +11,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './chat-input.component.scss',
 })
 export class ChatInputComponent {
+  private apiService = inject(ApiService);
+  
   sendText = output<string>();
   sendFile = output<File>();
   
@@ -35,22 +38,18 @@ export class ChatInputComponent {
     const text = this.inputText().trim();
     if (!text) return;
 
-    const blockedDomains = ['instagram.com', 'instagr.am', 'tiktok.com', 'facebook.com', 'fb.com'];
-    const hasBlockedLink = blockedDomains.some(domain => text.toLowerCase().includes(domain));
-
-    if (hasBlockedLink) {
-      this.errorMessage.set("Les liens provenant de réseaux sociaux (Instagram, TikTok, Facebook) ne sont pas autorisés.");
-      return;
-    }
+    this.errorMessage.set('');
     
-    this.errorMessage.set(''); 
-    this.sendText.emit(text);
-    this.inputText.set('');
-    
-    setTimeout(() => {
-      const textarea = document.querySelector('textarea');
-      if (textarea) {
-        textarea.style.height = 'auto';
+    // Enregistrer la question en base de données
+    this.apiService.saveQuestion(text).subscribe({
+      next: (response) => {
+        console.log('✅ Question enregistrée:', response);
+        this.sendText.emit(text); // Émet le message
+        this.inputText.set('');
+      },
+      error: (error) => {
+        console.error('❌ Erreur enregistrement:', error);
+        this.errorMessage.set('Erreur lors de l\'enregistrement');
       }
     });
   }
