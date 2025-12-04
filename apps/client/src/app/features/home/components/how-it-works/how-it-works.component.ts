@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InViewDirective } from '../../../../shared/directives/in-view.directive';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-how-it-works',
   standalone: true,
-  imports: [CommonModule, InViewDirective],
+  imports: [CommonModule, InViewDirective, RouterModule],
   template: `
     <section
       class="py-32 bg-vera-green transition-colors duration-300 overflow-hidden"
@@ -97,7 +98,8 @@ import { InViewDirective } from '../../../../shared/directives/in-view.directive
                 Accédez à Vera Web en ligne
               </h3>
               <button
-                class="bg-primary text-white px-8 py-4 rounded-full font-medium text-base hover:scale-105 transition-transform shadow-lg"
+                routerLink="/fact-checking"
+                class="bg-primary text-white px-8 py-4 rounded-full font-medium text-base hover:scale-105 transition-transform shadow-lg" 
               >
                 Sans installation et à tout moment
               </button>
@@ -223,4 +225,4 @@ import { InViewDirective } from '../../../../shared/directives/in-view.directive
     `,
   ],
 })
-export class HowItWorksComponent {}
+export class HowItWorksComponent { }
