@@ -6,7 +6,7 @@
     <div class="container mx-auto px-4 sm:px-6">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <!-- Text Content -->
-        <div class="text-center lg:text-left z-10 mx-auto lg:mx-0">
+        <div class="text-center lg:text-left z-10 mx-auto lg:mx-0 min-h-[80vh] flex flex-col justify-center lg:min-h-0 lg:block">
           <h1
             class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight text-primary dark:text-vera-cream mb-8"
           >
@@ -31,7 +31,7 @@
           >
             <a
               class="bg-primary text-vera-cream dark:text-primary dark:bg-vera-cream font-medium py-4 px-8 rounded-full w-full sm:w-auto text-center hover:opacity-90 transition-opacity text-lg"
-              href="#"
+              href="/fact-checking"
             >
               Parler à Vera
             </a>
@@ -49,12 +49,12 @@
         </div>
 
         <div
-          class="relative flex items-center justify-center mt-12 lg:mt-0 perspective-1000 h-[650px] w-full"
+          class="relative flex items-center justify-center mt-12 lg:mt-0 perspective-1000 h-[650px] lg:h-[800px] w-full"
           (mousemove)="onMouseMove($event)"
           (mouseleave)="onMouseLeave()"
         >
           <div
-            class="relative w-full max-w-[400px] md:w-[600px] md:max-w-none h-[650px]"
+            class="relative w-full max-w-[400px] md:w-[600px] lg:w-[750px] md:max-w-none h-[650px] lg:h-[800px]"
           >
             <img
               [style.transform]="transformStyle()"
