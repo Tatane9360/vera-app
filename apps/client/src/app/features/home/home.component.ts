@@ -6,32 +6,42 @@ import { ApiResponseDto } from '../../core/dtos/api.dto';
 import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
 import { SourcesSectionComponent } from './components/sources-section/sources-section.component';
 import { InViewDirective } from '../../shared/directives/in-view.directive';
+import { QuestionsSectionComponent } from './components/questions-section/questions-section.component';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HowItWorksComponent, SourcesSectionComponent, InViewDirective, RouterModule],
+  imports: [
+    CommonModule,
+    HowItWorksComponent,
+    QuestionsSectionComponent,
+    SourcesSectionComponent,
+    InViewDirective,
+    RouterModule,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  styles: [`
-    /* Highlighter Effect */
-    .highlighter-effect {
-      background-image: linear-gradient(to right, #DBF9BE, #DBF9BE); 
-      background-size: 0% 100%;
-      background-repeat: no-repeat;
-      transition: background-size 2s cubic-bezier(0.22, 1, 0.36, 1);
-      padding: 0 0.2em; 
-    }
-    
-    .highlighter-effect.in-view {
-      background-size: 100% 100%;
-    }
+  styles: [
+    `
+      /* Highlighter Effect */
+      .highlighter-effect {
+        background-image: linear-gradient(to right, #dbf9be, #dbf9be);
+        background-size: 0% 100%;
+        background-repeat: no-repeat;
+        transition: background-size 2s cubic-bezier(0.22, 1, 0.36, 1);
+        padding: 0 0.2em;
+      }
 
-    :host-context(.dark) .highlighter-effect {
-      background-image: linear-gradient(to right, #14532d, #14532d); 
-    }
-  `]
+      .highlighter-effect.in-view {
+        background-size: 100% 100%;
+      }
+
+      :host-context(.dark) .highlighter-effect {
+        background-image: linear-gradient(to right, #14532d, #14532d);
+      }
+    `,
+  ],
 })
 export class HomeComponent {
   private apiService = inject(ApiService);
@@ -63,25 +73,30 @@ export class HomeComponent {
     });
   }
 
-
-  transformStyle = signal('perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)');
+  transformStyle = signal(
+    'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)'
+  );
 
   onMouseMove(event: MouseEvent) {
     const container = event.currentTarget as HTMLElement;
     const rect = container.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
-    
+
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    
-    const rotateX = ((y - centerY) / centerY) * -10; 
+
+    const rotateX = ((y - centerY) / centerY) * -10;
     const rotateY = ((x - centerX) / centerX) * 10;
 
-    this.transformStyle.set(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`);
+    this.transformStyle.set(
+      `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`
+    );
   }
-  
+
   onMouseLeave() {
-     this.transformStyle.set('perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)');
+    this.transformStyle.set(
+      'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)'
+    );
   }
 }

@@ -1,71 +1,101 @@
-<div id="home" class="relative overflow-hidden font-sans pt-32 md:pt-40">
+<div
+  id="home"
+  class="relative overflow-hidden font-sans pt-32 md:pt-40 bg-[url('/images/background.png')] bg-cover bg-center bg-no-repeat"
+>
   <section class="pb-16 md:pb-24">
     <div class="container mx-auto px-4 sm:px-6">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
-        
         <!-- Text Content -->
         <div class="text-center lg:text-left z-10 mx-auto lg:mx-0">
-          <h1 class="font-display text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-tight text-primary dark:text-vera-cream mb-8">
-            Vera Web<br/><span 
-              appInView 
+          <h1
+            class="font-display text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-tight text-primary dark:text-vera-cream mb-8"
+          >
+            Vera Web<br /><span
+              appInView
               [appInViewThreshold]="0.5"
               class="highlighter-effect px-1 rounded-md inline box-decoration-clone"
-            >Le chatbot de confiance</span>
+              >Le chatbot de confiance</span
+            >
             <br class="hidden lg:block" />
             pour vérifier les faits
           </h1>
-          <p class="text-lg md:text-xl text-primary/80 dark:text-vera-cream/80 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light">
-            Un assistant intelligent conçu pour lutter contre la désinformation et t'aider à mieux comprendre le monde qui t'entoure.
+          <p
+            class="text-lg md:text-xl text-primary/80 dark:text-vera-cream/80 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light"
+          >
+            Un assistant intelligent conçu pour lutter contre la désinformation
+            et t'aider à mieux comprendre le monde qui t'entoure.
           </p>
 
-          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
-            <a class="bg-primary text-vera-cream dark:text-primary dark:bg-vera-cream font-medium py-4 px-8 rounded-full w-full sm:w-auto text-center hover:opacity-90 transition-opacity text-lg" href="#">
+          <div
+            class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6"
+          >
+            <a
+              class="bg-primary text-vera-cream dark:text-primary dark:bg-vera-cream font-medium py-4 px-8 rounded-full w-full sm:w-auto text-center hover:opacity-90 transition-opacity text-lg"
+              href="#"
+            >
               Parler à Vera
             </a>
-            <a class="group font-medium py-3 px-6 rounded-full w-full sm:w-auto text-center flex items-center justify-center gap-2 text-primary dark:text-vera-cream hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-lg" href="#">
+            <a
+              class="group font-medium py-3 px-6 rounded-full w-full sm:w-auto text-center flex items-center justify-center gap-2 text-primary dark:text-vera-cream hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-lg"
+              href="#"
+            >
               Regarder la démo
-              <span class="material-icons-outlined group-hover:translate-x-1 transition-transform">play_arrow</span>
+              <span
+                class="material-icons-outlined group-hover:translate-x-1 transition-transform"
+                >play_arrow</span
+              >
             </a>
           </div>
         </div>
 
-        <div 
+        <div
           class="relative flex items-center justify-center mt-12 lg:mt-0 perspective-1000 h-[650px] w-full"
           (mousemove)="onMouseMove($event)"
           (mouseleave)="onMouseLeave()"
         >
-          <div class="relative w-full max-w-[400px] md:w-[600px] md:max-w-none h-[650px]">
-            
-            <img 
+          <div
+            class="relative w-full max-w-[400px] md:w-[600px] md:max-w-none h-[650px]"
+          >
+            <img
               [style.transform]="transformStyle()"
-              alt="Vera App Interface Secondary" 
-              class="absolute left-0 top-0 z-0 w-[80%] drop-shadow-2xl transition-transform duration-100 ease-out will-change-transform opacity-90" 
+              alt="Vera App Interface Secondary"
+              class="absolute left-0 top-0 z-0 w-[80%] drop-shadow-2xl transition-transform duration-100 ease-out will-change-transform opacity-90"
               src="/images/ecran_2.webp"
             />
 
-            <img 
+            <img
               [style.transform]="transformStyle()"
-              alt="Vera App Interface Main" 
-              class="absolute right-0 top-32 z-10 w-[80%] drop-shadow-2xl transition-transform duration-100 ease-out will-change-transform" 
+              alt="Vera App Interface Main"
+              class="absolute right-0 top-32 z-10 w-[80%] drop-shadow-2xl transition-transform duration-100 ease-out will-change-transform"
               src="/images/ecran1.webp"
             />
-            
+
             <div class="absolute top-10 -right-10 -z-10">
-               <span class="material-icons-outlined text-7xl text-black/10 dark:text-white/10 rotate-12 transform">chat_bubble</span>
+              <span
+                class="material-icons-outlined text-7xl text-black/10 dark:text-white/10 rotate-12 transform"
+                >chat_bubble</span
+              >
             </div>
             <div class="absolute bottom-40 -left-10 -z-10">
-               <span class="material-icons-outlined text-9xl text-black/5 dark:text-white/5 -rotate-12 transform">verified</span>
+              <span
+                class="material-icons-outlined text-9xl text-black/5 dark:text-white/5 -rotate-12 transform"
+                >verified</span
+              >
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  
+
   <div id="how-it-works">
     <app-how-it-works></app-how-it-works>
   </div>
-  
+
+  <div id="questions">
+    <app-questions-section></app-questions-section>
+  </div>
+
   <div id="sources">
     <app-sources-section></app-sources-section>
   </div>

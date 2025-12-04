@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { User } from '@supabase/supabase-js';
 import { IconComponent } from './shared/components/icon/icon.component';
@@ -9,7 +9,13 @@ import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 
 @Component({
-  imports: [RouterModule, CommonModule, IconComponent, NavBarComponent, FooterComponent],
+  imports: [
+    RouterModule,
+    CommonModule,
+    IconComponent,
+    NavBarComponent,
+    FooterComponent,
+  ],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -23,7 +29,7 @@ export class App implements OnInit {
   user: User | null | undefined = undefined;
 
   ngOnInit() {
-    this.authService.currentUser$.subscribe(user => {
+    this.authService.currentUser$.subscribe((user) => {
       this.user = user;
     });
   }
@@ -35,5 +41,15 @@ export class App implements OnInit {
 
   get isAuthenticated(): boolean {
     return !!this.user;
+  }
+
+  isDashboard = false;
+
+  constructor() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.isDashboard = event.urlAfterRedirects.includes('/dashboard');
+      }
+    });
   }
 }
