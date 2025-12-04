@@ -44,11 +44,14 @@ export class App implements OnInit {
   }
 
   isDashboard = false;
+  isFactChecking = false;
 
   constructor() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.isDashboard = event.urlAfterRedirects.includes('/dashboard');
+        this.isFactChecking =
+          event.urlAfterRedirects.includes('/fact-checking');
       }
     });
   }

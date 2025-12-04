@@ -1,4 +1,4 @@
-<app-nav-bar *ngIf="!isDashboard"></app-nav-bar>
+<app-nav-bar *ngIf="!isDashboard && !isFactChecking"></app-nav-bar>
 
 <!-- Page Content -->
 <main
@@ -6,4 +6,4 @@
 >
   <router-outlet></router-outlet>
 </main>
-<app-footer *ngIf="!isDashboard"></app-footer>
+<app-footer *ngIf="!isDashboard && !isFactChecking"></app-footer>
