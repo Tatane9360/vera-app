@@ -36,6 +36,9 @@ export class FactCheckingPageComponent implements OnInit {
   ngOnInit() {
     this.loadHistory();
     this.startNewChat();
+    if (window.innerWidth < 768) {
+      this.isSidebarOpen.set(false);
+    }
   }
 
   loadHistory() {

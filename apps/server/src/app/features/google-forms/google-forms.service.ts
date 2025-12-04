@@ -10,7 +10,6 @@ export class GoogleFormsService {
 
   constructor() {
     try {
-      // Check if credentials are provided via environment variable (Railway)
       if (process.env.GOOGLE_CREDENTIALS_JSON) {
         this.logger.log('✅ Using Google credentials from GOOGLE_CREDENTIALS_JSON environment variable');
         const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
@@ -23,7 +22,6 @@ export class GoogleFormsService {
           ],
         });
       } else {
-        // Fallback to local file (development)
         this.logger.log('Using Google credentials from local file');
         const keyFilePath = path.join(process.cwd(), 'apps/server/google-credentials.json');
         

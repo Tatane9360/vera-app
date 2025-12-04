@@ -1,16 +1,33 @@
 <div
-  class="flex h-[100dvh] bg-vera-cream dark:bg-primary text-primary dark:text-vera-cream overflow-hidden relative font-sans bg-[url('/images/background.png')] dark:bg-none bg-cover bg-center bg-no-repeat"
+  class="flex h-[100dvh] bg-vera-cream dark:bg-[#1E1E1E] text-primary dark:text-vera-cream overflow-hidden relative font-sans bg-[url('/images/background.png')] dark:bg-none bg-cover bg-center bg-no-repeat"
 >
+  <!-- Mobile Backdrop -->
+  <div
+    class="absolute inset-0 bg-black/50 z-20 md:hidden transition-opacity duration-300"
+    [class.opacity-0]="!isSidebarOpen()"
+    [class.pointer-events-none]="!isSidebarOpen()"
+    [class.opacity-100]="isSidebarOpen()"
+    (click)="toggleSidebar()"
+    (keydown.enter)="toggleSidebar()"
+    (keydown.space)="toggleSidebar()"
+    tabindex="0"
+    role="button"
+  ></div>
+
   <!-- Sidebar -->
   <app-sidebar
-    [class.hidden]="!isSidebarOpen()"
-    [class.flex]="isSidebarOpen()"
-    class="z-30 h-full flex-shrink-0 md:flex"
+    class="z-30 h-full flex-shrink-0 flex absolute md:relative shadow-2xl md:shadow-none transition-transform duration-300 ease-in-out"
+    [class.-translate-x-full]="!isSidebarOpen()"
+    [class.translate-x-0]="isSidebarOpen()"
+    [class.md:translate-x-0]="true"
+    [class.md:hidden]="!isSidebarOpen()"
+    [class.md:flex]="isSidebarOpen()"
     [conversations]="conversations()"
     [currentConversationId]="currentConversationId()"
     (selectConversation)="selectConversation($event)"
     (newChat)="startNewChat()"
     (deleteConversation)="deleteConversation($event)"
+    (closeSidebar)="toggleSidebar()"
   ></app-sidebar>
 
   <!-- Main Content -->

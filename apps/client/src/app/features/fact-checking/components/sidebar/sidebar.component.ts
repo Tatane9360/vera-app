@@ -19,6 +19,7 @@ export class SidebarComponent {
   selectConversation = output<string>();
   newChat = output<void>();
   deleteConversation = output<string>();
+  closeSidebar = output<void>();
 
   onSelect(id: string) {
     this.selectConversation.emit(id);
