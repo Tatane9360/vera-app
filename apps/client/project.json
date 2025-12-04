@@ -8,11 +8,15 @@
   "targets": {
     "build": {
       "executor": "@angular/build:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/client",
         "browser": "apps/client/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/client/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -46,7 +50,8 @@
               "with": "apps/client/src/environments/environment.prod.ts"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "serviceWorker": "apps/client/ngsw-config.json"
         },
         "development": {
           "optimization": false,
@@ -80,7 +85,9 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{projectRoot}/test-output/jest/coverage"],
+      "outputs": [
+        "{projectRoot}/test-output/jest/coverage"
+      ],
       "options": {
         "jestConfig": "apps/client/jest.config.cts",
         "tsConfig": "apps/client/tsconfig.spec.json"
