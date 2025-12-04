@@ -1,0 +1,93 @@
+<div
+  class="flex flex-col h-full bg-vera-cream/50 dark:bg-black/20 backdrop-blur-md border-r border-primary/5 dark:border-white/5 w-64 md:w-72 transition-all duration-300"
+>
+  <!-- New Chat Button -->
+  <div class="p-4">
+    <button
+      (click)="onNewChat()"
+      class="w-full flex items-center gap-3 px-4 py-3 bg-primary text-vera-cream dark:bg-vera-cream dark:text-primary rounded-xl hover:opacity-90 transition-all shadow-sm group"
+    >
+      <span class="font-medium">Nouvelle conversation</span>
+      <span class="material-icons-outlined ml-auto text-sm">add</span>
+    </button>
+  </div>
+
+  <!-- History List -->
+  <div class="flex-1 overflow-y-auto px-3 py-2 space-y-2">
+    <div *ngIf="conversations().length === 0" class="text-center py-8 px-4">
+      <p class="text-sm text-primary/40 dark:text-vera-cream/40">
+        Aucune conversation récente
+      </p>
+    </div>
+
+    <div class="space-y-1">
+      <p
+        *ngIf="conversations().length > 0"
+        class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-primary/40 dark:text-vera-cream/40"
+      >
+        Historique
+      </p>
+
+      <button
+        *ngFor="let conv of conversations()"
+        (click)="onSelect(conv.id)"
+        class="w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl transition-all group relative"
+        [ngClass]="{
+          'bg-white dark:bg-white/10 shadow-sm':
+            currentConversationId() === conv.id,
+          'hover:bg-primary/5 dark:hover:bg-white/5':
+            currentConversationId() !== conv.id
+        }"
+      >
+        <span
+          class="material-icons-outlined text-lg text-primary/60 dark:text-vera-cream/60"
+          >chat_bubble_outline</span
+        >
+
+        <div class="flex-1 min-w-0">
+          <p
+            class="text-sm font-medium truncate text-primary dark:text-vera-cream"
+          >
+            {{ conv.title }}
+          </p>
+          <p
+            class="text-[10px] text-primary/40 dark:text-vera-cream/40 truncate"
+          >
+            {{ conv.createdAt | date : 'dd/MM/yyyy HH:mm' }}
+          </p>
+        </div>
+
+        <!-- Delete Button (Visible on hover) -->
+        <div
+          (click)="onDelete($event, conv.id)"
+          class="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 text-primary/40 dark:text-vera-cream/40 hover:text-red-500 dark:hover:text-red-400 transition-all"
+          title="Supprimer"
+        >
+          <span class="material-icons-outlined text-base">delete</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- User/Footer Area -->
+  <div class="p-4 border-t border-primary/5 dark:border-white/5">
+    <div class="flex items-center gap-3 px-2 py-2">
+      <div
+        class="w-8 h-8 rounded-full bg-primary/10 dark:bg-white/10 flex items-center justify-center"
+      >
+        <span
+          class="material-icons-outlined text-primary dark:text-vera-cream text-sm"
+          >person</span
+        >
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-xs font-medium text-primary dark:text-vera-cream">
+          Utilisateur
+        </p>
+        <p class="text-[10px] text-primary/50 dark:text-vera-cream/50">
+          Local Storage
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

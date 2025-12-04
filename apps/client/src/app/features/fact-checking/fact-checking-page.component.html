@@ -1,17 +1,42 @@
-<div class="flex flex-col h-[100dvh] bg-vera-cream dark:bg-primary text-primary dark:text-vera-cream overflow-hidden relative font-sans">
-  <!-- Background Texture -->
-  <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIi8+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDAiIG9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4=');"></div>
+<div
+  class="flex h-[100dvh] pt-20 md:pt-24 bg-vera-cream dark:bg-primary text-primary dark:text-vera-cream overflow-hidden relative font-sans bg-[url('/images/background.png')] dark:bg-none bg-cover bg-center bg-no-repeat"
+>
+  <!-- Sidebar -->
+  <app-sidebar
+    [class.hidden]="!isSidebarOpen()"
+    [class.flex]="isSidebarOpen()"
+    class="z-30 h-full flex-shrink-0 md:flex"
+    [conversations]="conversations()"
+    [currentConversationId]="currentConversationId()"
+    (selectConversation)="selectConversation($event)"
+    (newChat)="startNewChat()"
+    (deleteConversation)="deleteConversation($event)"
+  ></app-sidebar>
 
-  <!-- Header -->
-  <app-chat-header class="z-10 flex-shrink-0"></app-chat-header>
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col min-w-0 relative z-10 h-full">
+    <!-- Header Area with Toggle -->
+    <div class="flex items-center w-full">
+      <button
+        (click)="toggleSidebar()"
+        class="p-2 ml-2 text-primary dark:text-vera-cream hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-colors md:hidden"
+      >
+        <span class="material-icons-outlined">menu</span>
+      </button>
+      <app-chat-header class="flex-1"></app-chat-header>
+    </div>
 
-  <!-- Chat Area -->
-  <app-chat-messages [messages]="messages()" class="flex-1 min-h-0 z-0"></app-chat-messages>
+    <!-- Chat Area -->
+    <app-chat-messages
+      [messages]="messages()"
+      class="flex-1 min-h-0 z-0"
+    ></app-chat-messages>
 
-  <!-- Input Area -->
-  <app-chat-input 
-    class="z-20 flex-shrink-0"
-    (sendText)="onSendText($event)"
-    (sendFile)="onSendFile($event)"
-  ></app-chat-input>
+    <!-- Input Area -->
+    <app-chat-input
+      class="z-20 flex-shrink-0"
+      (sendText)="onSendText($event)"
+      (sendFile)="onSendFile($event)"
+    ></app-chat-input>
+  </div>
 </div>

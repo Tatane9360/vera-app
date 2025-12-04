@@ -1,9 +1,9 @@
-<section class="py-24 bg-vera-green dark:bg-lime-800 transition-colors duration-300 overflow-hidden">
+<section class="py-24 bg-vera-green transition-colors duration-300 overflow-hidden">
   <div class="container mx-auto px-4">
     
     <!-- Header -->
     <div class="text-center mb-16">
-      <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary dark:text-vera-cream max-w-4xl mx-auto leading-tight mb-12">
+      <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary max-w-4xl mx-auto leading-tight mb-12">
         Vera est connectée en temps réel <br/> à 400+ sites de fact-checking
       </h2>
       
@@ -13,24 +13,24 @@
         <!-- Row 1: Scrolling Left -->
         <div class="flex gap-8 mb-8 animate-scroll-left w-max">
           <!-- Original Set -->
-          <div *ngFor="let source of sourcesRow1" class="flex items-center justify-center w-24 h-24 bg-white/50 dark:bg-white/10 backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4">
-             <img src="/images/image-carousel.png" alt="Source logo" class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity dark:brightness-0 dark:invert" />
+          <div *ngFor="let source of sourcesRow1" class="flex items-center justify-center w-24 h-24 bg-white/50  backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4">
+             <img src="/images/image-carousel.png" alt="Source logo" class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity" />
           </div>
           <!-- Duplicate Set for Infinite Loop -->
-          <div *ngFor="let source of sourcesRow1" class="flex items-center justify-center w-24 h-24 bg-white/50 dark:bg-white/10 backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4">
-             <img src="/images/image-carousel.png" alt="Source logo" class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity dark:brightness-0 dark:invert" />
+          <div *ngFor="let source of sourcesRow1" class="flex items-center justify-center w-24 h-24 bg-white/50  backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4">
+             <img src="/images/image-carousel.png" alt="Source logo" class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity" />
           </div>
         </div>
 
         <!-- Row 2: Scrolling Right -->
         <div class="flex gap-8 animate-scroll-right w-max">
           <!-- Original Set -->
-          <div *ngFor="let source of sourcesRow2" class="flex items-center justify-center w-24 h-24 bg-white/50 dark:bg-white/10 backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4">
-             <img src="/images/image-carousel.png" alt="Source logo" class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity dark:brightness-0 dark:invert" />
+          <div *ngFor="let source of sourcesRow2" class="flex items-center justify-center w-24 h-24 bg-white/50  backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4">
+             <img src="/images/image-carousel.png" alt="Source logo" class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity" />
           </div>
           <!-- Duplicate Set for Infinite Loop -->
-          <div *ngFor="let source of sourcesRow2" class="flex items-center justify-center w-24 h-24 bg-white/50 dark:bg-white/10 backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4">
-             <img src="/images/image-carousel.png" alt="Source logo" class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity dark:brightness-0 dark:invert" />
+          <div *ngFor="let source of sourcesRow2" class="flex items-center justify-center w-24 h-24 bg-white/50  backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4">
+             <img src="/images/image-carousel.png" alt="Source logo" class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity" />
           </div>
         </div>
 
@@ -44,25 +44,25 @@
       <div 
         appTilt 
         [tiltMaxAngle]="3"
-        class="bg-vera-cream dark:bg-primary border border-primary/5 dark:border-white/10 p-8 rounded-[2rem] shadow-xl transition-shadow duration-300"
+        class="bg-vera-cream border border-primary/5 p-8 rounded-[2rem] shadow-xl transition-shadow duration-300"
       >
-        <h3 class="font-display text-3xl md:text-4xl font-bold text-primary dark:text-vera-cream mb-2">
+        <h3 class="font-display text-3xl md:text-4xl font-bold text-primary mb-2">
           150+ sites de fact-checking
         </h3>
-        <p class="text-primary/70 dark:text-vera-cream/70 mb-8 font-medium">Pour la vérification de faits</p>
+        <p class="text-primary/70 mb-8 font-medium">Pour la vérification de faits</p>
         
         <ul class="space-y-4 mb-10">
           <li class="flex items-start gap-3">
             <span class="material-icons-outlined text-green-600 mt-0.5">check</span>
-            <span class="text-primary/90 dark:text-vera-cream/90">Signataires des chartes européennes IFCN et EFCSN</span>
+            <span class="text-primary/90 ">Signataires des chartes européennes IFCN et EFCSN</span>
           </li>
           <li class="flex items-start gap-3">
             <span class="material-icons-outlined text-green-600 mt-0.5">check</span>
-            <span class="text-primary/90 dark:text-vera-cream/90">Agences de presses spécialisées en fact-checking</span>
+            <span class="text-primary/90 ">Agences de presses spécialisées en fact-checking</span>
           </li>
         </ul>
 
-        <button class="bg-primary text-white dark:bg-vera-cream dark:text-primary px-8 py-3 rounded-full font-medium hover:opacity-90 transition-opacity w-full sm:w-auto">
+        <button class="bg-primary text-white px-8 py-3 rounded-full font-medium hover:opacity-90 transition-opacity w-full sm:w-auto">
           Voir la liste des sources
         </button>
       </div>
@@ -71,25 +71,25 @@
       <div 
         appTilt 
         [tiltMaxAngle]="3"
-        class="bg-vera-cream dark:bg-primary border border-primary/5 dark:border-white/10 p-8 rounded-[2rem] shadow-xl transition-shadow duration-300"
+        class="bg-vera-cream border border-primary/5 p-8 rounded-[2rem] shadow-xl transition-shadow duration-300"
       >
-        <h3 class="font-display text-3xl md:text-4xl font-bold text-primary dark:text-vera-cream mb-2">
+        <h3 class="font-display text-3xl md:text-4xl font-bold text-primary mb-2">
           250+ médias fiables et reconnus
         </h3>
-        <p class="text-primary/70 dark:text-vera-cream/70 mb-8 font-medium">Pour connaître l'actualité</p>
+        <p class="text-primary/70 mb-8 font-medium">Pour connaître l'actualité</p>
         
         <ul class="space-y-4 mb-10">
           <li class="flex items-start gap-3">
             <span class="material-icons-outlined text-green-600 mt-0.5">check</span>
-            <span class="text-primary/90 dark:text-vera-cream/90">Tous les bords politiques</span>
+            <span class="text-primary/90">Tous les bords politiques</span>
           </li>
           <li class="flex items-start gap-3">
             <span class="material-icons-outlined text-green-600 mt-0.5">check</span>
-            <span class="text-primary/90 dark:text-vera-cream/90">Réputés comme fiables et sérieux</span>
+            <span class="text-primary/90">Réputés comme fiables et sérieux</span>
           </li>
         </ul>
 
-        <button class="bg-primary text-white dark:bg-vera-cream dark:text-primary px-8 py-3 rounded-full font-medium hover:opacity-90 transition-opacity w-full sm:w-auto">
+        <button class="bg-primary text-white px-8 py-3 rounded-full font-medium hover:opacity-90 transition-opacity w-full sm:w-auto">
           Voir la liste des sources
         </button>
       </div>

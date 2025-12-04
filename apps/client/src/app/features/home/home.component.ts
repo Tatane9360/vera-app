@@ -38,7 +38,8 @@ import { RouterModule } from '@angular/router';
       }
 
       :host-context(.dark) .highlighter-effect {
-        background-image: linear-gradient(to right, #14532d, #14532d);
+        background-image: linear-gradient(to right, #dbf9be, #dbf9be);
+        color: #111111; /* Ensure text is dark on light background */
       }
     `,
   ],

@@ -28,12 +28,27 @@
 <!-- Vera Message -->
 <div *ngIf="message().role === 'vera'" class="flex justify-start">
   <div class="max-w-[90%] md:max-w-[75%]">
+    <!-- Loading State (No Bubble) -->
     <div
-      class="bg-white dark:bg-gray-800 text-primary dark:text-vera-cream rounded-2xl rounded-tl-sm px-6 py-5 shadow-md relative border border-gray-100 dark:border-gray-700 group"
+      *ngIf="message().isLoading"
+      class="relative flex items-center justify-center w-12 h-12 ml-2"
+    >
+      <!-- Rotating Circle -->
+      <div
+        class="absolute inset-0 border-2 border-primary dark:border-vera-cream border-t-transparent dark:border-t-transparent rounded-full animate-spin"
+      ></div>
+
+      <!-- Logo -->
+      <app-icon icon="logov" [width]="18" [height]="18"></app-icon>
+    </div>
+
+    <!-- Standard Message Bubble -->
+    <div
+      *ngIf="!message().isLoading"
+      class="bg-vera-green text-primary rounded-2xl rounded-tl-sm px-6 py-5 shadow-md relative border border-gray-100 dark:border-gray-700 group"
     >
       <!-- Share Button -->
       <button
-        *ngIf="!message().isLoading"
         (click)="shareMessage()"
         class="absolute top-2 right-2 p-2 text-gray-400 hover:text-primary dark:hover:text-white transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
         [title]="copied() ? 'Copié !' : 'Partager'"
@@ -51,21 +66,8 @@
         </svg>
       </button>
 
-      <!-- Loading State -->
-      <div *ngIf="message().isLoading" class="flex items-center gap-2">
-        <div
-          class="w-2 h-2 bg-primary dark:bg-vera-cream rounded-full animate-bounce"
-        ></div>
-        <div
-          class="w-2 h-2 bg-primary dark:bg-vera-cream rounded-full animate-bounce delay-100"
-        ></div>
-        <div
-          class="w-2 h-2 bg-primary dark:bg-vera-cream rounded-full animate-bounce delay-200"
-        ></div>
-      </div>
-
       <!-- Content -->
-      <div *ngIf="!message().isLoading">
+      <div>
         <p class="whitespace-pre-wrap leading-relaxed text-lg pr-8">
           {{ message().content }}
         </p>

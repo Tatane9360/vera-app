@@ -2,11 +2,12 @@ import { Component, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatMessage } from '../../models/chat-message.model';
 import { SourceLinksComponent } from '../source-links/source-links.component';
+import { IconComponent } from '../../../../shared/components/icon/icon.component';
 
 @Component({
   selector: 'app-chat-message',
   standalone: true,
-  imports: [CommonModule, SourceLinksComponent],
+  imports: [CommonModule, SourceLinksComponent, IconComponent],
   templateUrl: './chat-message.component.html',
   styleUrl: './chat-message.component.scss',
 })
@@ -16,7 +17,7 @@ export class ChatMessageComponent {
 
   async shareMessage() {
     const content = this.message().content;
-    
+
     if (navigator.share) {
       try {
         await navigator.share({

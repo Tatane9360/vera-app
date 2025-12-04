@@ -4,13 +4,14 @@ import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { ThemeService } from '../../../services/theme.service';
 import { User } from '@supabase/supabase-js';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, IconComponent],
   templateUrl: './nav-bar.component.html',
-  styles: []
+  styles: [],
 })
 export class NavBarComponent {
   public authService = inject(AuthService);
@@ -22,7 +23,7 @@ export class NavBarComponent {
   user = signal<User | null | undefined>(undefined);
 
   toggleMobileMenu() {
-    this.isMobileMenuOpen.update(v => !v);
+    this.isMobileMenuOpen.update((v) => !v);
     if (this.isMobileMenuOpen()) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -36,7 +37,7 @@ export class NavBarComponent {
   }
 
   constructor() {
-    this.authService.currentUser$.subscribe(u => this.user.set(u));
+    this.authService.currentUser$.subscribe((u) => this.user.set(u));
   }
 
   @HostListener('window:scroll', [])

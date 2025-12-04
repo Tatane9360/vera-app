@@ -1,104 +1,155 @@
-<nav 
+<nav
   class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
   [ngClass]="{
-    'bg-vera-cream/80 dark:bg-primary/80 backdrop-blur-md shadow-sm py-4': isScrolled(),
+    'bg-vera-cream/80 dark:bg-primary/80 backdrop-blur-md shadow-sm py-4':
+      isScrolled(),
     'bg-transparent py-6': !isScrolled()
   }"
 >
   <div class="container mx-auto flex items-center justify-between px-6">
     <!-- Logo -->
-    <a routerLink="/" class="font-display text-4xl font-bold tracking-tight text-primary dark:text-vera-cream">Vera</a>
+    <a routerLink="/" class="text-primary dark:text-red-600 flex items-center">
+      <app-icon
+        [icon]="themeService.darkMode() ? 'logoVeraWhite' : 'logovera'"
+        [width]="99"
+        [height]="31"
+      >
+      </app-icon>
+    </a>
 
     <!-- Desktop Menu -->
     <div class="hidden lg:flex items-center gap-10">
-      <a [routerLink]="['/']" fragment="how-it-works" class="text-base font-medium text-primary dark:text-vera-cream hover:opacity-70 transition-opacity cursor-pointer">Comment ça marche ?</a>
-      <a [routerLink]="['/']" fragment="sources" class="text-base font-medium text-primary dark:text-vera-cream hover:opacity-70 transition-opacity cursor-pointer">Nos Sources</a>
+      <a
+        [routerLink]="['/']"
+        fragment="how-it-works"
+        class="text-base font-medium text-primary dark:text-vera-cream hover:opacity-70 transition-opacity cursor-pointer"
+        >Comment ça marche ?</a
+      >
+      <a
+        [routerLink]="['/']"
+        fragment="sources"
+        class="text-base font-medium text-primary dark:text-vera-cream hover:opacity-70 transition-opacity cursor-pointer"
+        >Nos Sources</a
+      >
     </div>
 
     <!-- Right Actions -->
     <div class="flex items-center gap-6">
-       <!-- Desktop Auth & Theme - Hidden on Mobile -->
-       <div class="hidden lg:flex items-center gap-6">
-         <ng-container *ngIf="isAuthenticated">
-            <a routerLink="/dashboard" class="text-sm font-medium text-primary dark:text-vera-cream hover:opacity-70">Dashboard</a>
-            <button (click)="logout()" class="text-sm font-medium text-red-600 hover:opacity-70">Déconnexion</button>
-         </ng-container>
+      <!-- Desktop Auth & Theme - Hidden on Mobile -->
+      <div class="hidden lg:flex items-center gap-6">
+        <ng-container *ngIf="isAuthenticated">
+          <a
+            routerLink="/dashboard"
+            class="text-sm font-medium text-primary dark:text-vera-cream hover:opacity-70"
+            >Dashboard</a
+          >
+          <button
+            (click)="logout()"
+            class="text-sm font-medium text-red-600 hover:opacity-70"
+          >
+            Déconnexion
+          </button>
+        </ng-container>
 
-         <a routerLink="/fact-checking" class="bg-primary text-vera-cream dark:bg-vera-cream dark:text-primary font-medium py-3 px-8 rounded-full text-sm hover:opacity-90 transition-opacity">
+        <a
+          routerLink="/fact-checking"
+          class="bg-primary text-vera-cream dark:bg-vera-cream dark:text-primary font-medium py-3 px-8 rounded-full text-sm hover:opacity-90 transition-opacity"
+        >
           Parler à Vera
-         </a>
+        </a>
 
-         <!-- Theme Toggle -->
-         <div class="flex items-center gap-3 text-sm font-medium text-primary dark:text-vera-cream">
-            <button (click)="themeService.darkMode.set(false)" [class.underline]="!themeService.darkMode()" [class.opacity-50]="themeService.darkMode()" class="decoration-1 underline-offset-4 hover:opacity-100 transition-opacity">Light</button>
-            <button (click)="themeService.darkMode.set(true)" [class.underline]="themeService.darkMode()" [class.opacity-50]="!themeService.darkMode()" class="decoration-1 underline-offset-4 hover:opacity-100 transition-opacity">Dark</button>
-         </div>
-       </div>
+        <!-- Theme Toggle -->
+        <div
+          class="flex items-center gap-3 text-sm font-medium text-primary dark:text-vera-cream"
+        >
+          <button
+            (click)="themeService.darkMode.set(false)"
+            [class.underline]="!themeService.darkMode()"
+            [class.opacity-50]="themeService.darkMode()"
+            class="decoration-1 underline-offset-4 hover:opacity-100 transition-opacity"
+          >
+            Light
+          </button>
+          <button
+            (click)="themeService.darkMode.set(true)"
+            [class.underline]="themeService.darkMode()"
+            [class.opacity-50]="!themeService.darkMode()"
+            class="decoration-1 underline-offset-4 hover:opacity-100 transition-opacity"
+          >
+            Dark
+          </button>
+        </div>
+      </div>
 
       <!-- Mobile Toggle -->
-      <button 
-        (click)="toggleMobileMenu()" 
+      <button
+        (click)="toggleMobileMenu()"
         class="lg:hidden relative z-50 p-2 text-primary dark:text-vera-cream hover:opacity-70 transition-opacity"
         aria-label="Toggle menu"
       >
-        <span class="material-icons-outlined text-2xl">{{ isMobileMenuOpen() ? 'close' : 'menu' }}</span>
+        <span class="material-icons-outlined text-2xl">{{
+          isMobileMenuOpen() ? 'close' : 'menu'
+        }}</span>
       </button>
     </div>
   </div>
-
 </nav>
 
 <!-- Mobile Menu Overlay -->
-<div 
+<div
   class="fixed inset-0 z-40 bg-vera-cream dark:bg-primary transition-all duration-700 ease-in-out lg:hidden flex flex-col items-center justify-center"
-  [style.clip-path]="isMobileMenuOpen() ? 'circle(150% at top right)' : 'circle(0% at top right)'"
+  [style.clip-path]="
+    isMobileMenuOpen() ? 'circle(150% at top right)' : 'circle(0% at top right)'
+  "
 >
   <nav class="flex flex-col items-center gap-8 text-center">
-    <a 
-      [routerLink]="['/']" 
-      fragment="home" 
+    <a
+      [routerLink]="['/']"
+      fragment="home"
       (click)="closeMobileMenu()"
       class="text-3xl font-display font-bold text-primary dark:text-vera-cream hover:opacity-70 transition-opacity"
     >
       Accueil
     </a>
-    <a 
-      [routerLink]="['/']" 
-      fragment="how-it-works" 
+    <a
+      [routerLink]="['/']"
+      fragment="how-it-works"
       (click)="closeMobileMenu()"
       class="text-3xl font-display font-bold text-primary dark:text-vera-cream hover:opacity-70 transition-opacity"
     >
       Comment ça marche ?
     </a>
-    <a 
-      [routerLink]="['/']" 
-      fragment="sources" 
+    <a
+      [routerLink]="['/']"
+      fragment="sources"
       (click)="closeMobileMenu()"
       class="text-3xl font-display font-bold text-primary dark:text-vera-cream hover:opacity-70 transition-opacity"
     >
       Nos Sources
     </a>
-    
-    <div class="w-12 h-1 bg-primary/10 dark:bg-vera-cream/10 rounded-full my-4"></div>
+
+    <div
+      class="w-12 h-1 bg-primary/10 dark:bg-vera-cream/10 rounded-full my-4"
+    ></div>
 
     <ng-container *ngIf="isAuthenticated; else loginBtn">
-      <a 
-        routerLink="/dashboard" 
+      <a
+        routerLink="/dashboard"
         (click)="closeMobileMenu()"
         class="text-xl font-medium text-primary dark:text-vera-cream hover:opacity-70"
       >
         Dashboard
       </a>
-      <button 
-        (click)="logout(); closeMobileMenu()" 
+      <button
+        (click)="logout(); closeMobileMenu()"
         class="text-xl font-medium text-red-600 hover:opacity-70"
       >
         Déconnexion
       </button>
     </ng-container>
     <ng-template #loginBtn>
-      <a 
-        routerLink="/login" 
+      <a
+        routerLink="/login"
         (click)="closeMobileMenu()"
         class="text-xl font-medium text-primary dark:text-vera-cream hover:opacity-70"
       >
@@ -106,8 +157,8 @@
       </a>
     </ng-template>
 
-    <a 
-      routerLink="/fact-checking" 
+    <a
+      routerLink="/fact-checking"
       (click)="closeMobileMenu()"
       class="mt-4 bg-primary text-vera-cream dark:bg-vera-cream dark:text-primary font-medium py-4 px-10 rounded-full text-lg hover:opacity-90 transition-opacity"
     >
@@ -116,12 +167,20 @@
 
     <!-- Mobile Theme Toggle -->
     <div class="flex items-center gap-6 mt-8">
-      <button (click)="themeService.darkMode.set(false)" [class.opacity-50]="themeService.darkMode()" class="flex flex-col items-center gap-2 text-primary dark:text-vera-cream transition-opacity">
+      <button
+        (click)="themeService.darkMode.set(false)"
+        [class.opacity-50]="themeService.darkMode()"
+        class="flex flex-col items-center gap-2 text-primary dark:text-vera-cream transition-opacity"
+      >
         <span class="material-icons-outlined text-2xl">light_mode</span>
         <span class="text-sm font-medium">Light</span>
       </button>
       <div class="w-px h-8 bg-primary/20 dark:bg-vera-cream/20"></div>
-      <button (click)="themeService.darkMode.set(true)" [class.opacity-50]="!themeService.darkMode()" class="flex flex-col items-center gap-2 text-primary dark:text-vera-cream transition-opacity">
+      <button
+        (click)="themeService.darkMode.set(true)"
+        [class.opacity-50]="!themeService.darkMode()"
+        class="flex flex-col items-center gap-2 text-primary dark:text-vera-cream transition-opacity"
+      >
         <span class="material-icons-outlined text-2xl">dark_mode</span>
         <span class="text-sm font-medium">Dark</span>
       </button>
