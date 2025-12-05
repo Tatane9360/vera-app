@@ -36,7 +36,7 @@ export class App implements OnInit {
 
   async logout() {
     await this.authService.signOut();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/tetan_aime_coder']);
   }
 
   get isAuthenticated(): boolean {
@@ -49,7 +49,7 @@ export class App implements OnInit {
   constructor() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.isDashboard = event.urlAfterRedirects.includes('/dashboard');
+        this.isDashboard = event.urlAfterRedirects.includes('/flo_le_meilleur_prof');
         this.isFactChecking =
           event.urlAfterRedirects.includes('/fact-checking');
       }

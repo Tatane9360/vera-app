@@ -1,6 +1,6 @@
 {
-  "name": "client",
-  "short_name": "client",
+  "name": "Vera",
+  "short_name": "Vera",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

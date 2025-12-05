@@ -8,13 +8,13 @@ export const authGuard = () => {
   const router = inject(Router);
 
   return authService.currentUser$.pipe(
-    filter(user => user !== undefined), 
+    filter(user => user !== undefined),
     take(1),
     map(user => {
       if (user) {
         return true;
       }
-      return router.createUrlTree(['/login']);
+      return router.createUrlTree(['/tetan_aime_coder']);
     })
   );
 };

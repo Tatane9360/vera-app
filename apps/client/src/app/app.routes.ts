@@ -8,7 +8,7 @@ export const appRoutes: Route[] = [
       import('./features/home/home.routes').then((m) => m.HOME_ROUTES),
   },
   {
-    path: 'login',
+    path: 'tetan_aime_coder',
     loadChildren: () =>
       import('./features/auth/login/login.routes').then((m) => m.LOGIN_ROUTES),
   },
@@ -28,7 +28,7 @@ export const appRoutes: Route[] = [
       import('./features/auth/reset-password/reset-password.routes').then((m) => m.RESET_PASSWORD_ROUTES),
   },
   {
-    path: 'dashboard',
+    path: 'flo_le_meilleur_prof',
     canActivate: [authGuard],
     loadChildren: () =>
       import('./features/dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTES),
@@ -40,6 +40,6 @@ export const appRoutes: Route[] = [
   },
   {
     path: '**',
-    redirectTo: '',    
+    redirectTo: '',
   },
 ]; 

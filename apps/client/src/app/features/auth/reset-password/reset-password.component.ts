@@ -32,7 +32,7 @@ export class ResetPasswordComponent {
   passwordMatchValidator(form: FormGroup) {
     const password = form.get('password');
     const confirmPassword = form.get('confirmPassword');
-    
+
     if (password && confirmPassword && password.value !== confirmPassword.value) {
       confirmPassword.setErrors({ passwordMismatch: true });
       return { passwordMismatch: true };
@@ -59,7 +59,7 @@ export class ResetPasswordComponent {
     } else {
       this.successMessage = 'Votre mot de passe a été réinitialisé avec succès !';
       setTimeout(() => {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/flo_le_meilleur_prof']);
       }, 2000);
     }
   }

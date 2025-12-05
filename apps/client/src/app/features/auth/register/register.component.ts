@@ -33,7 +33,7 @@ export class RegisterComponent {
   passwordMatchValidator(form: FormGroup) {
     const password = form.get('password');
     const confirmPassword = form.get('confirmPassword');
-    
+
     if (password && confirmPassword && password.value !== confirmPassword.value) {
       confirmPassword.setErrors({ passwordMismatch: true });
       return { passwordMismatch: true };
@@ -60,7 +60,7 @@ export class RegisterComponent {
     } else {
       this.successMessage = 'Inscription réussie ! Vérifiez votre email pour confirmer votre compte.';
       setTimeout(() => {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/tetan_aime_coder']);
       }, 3000);
     }
   }
