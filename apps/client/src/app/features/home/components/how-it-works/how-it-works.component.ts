@@ -11,9 +11,9 @@ import { IconComponent } from '../../../../shared/components/icon/icon.component
   template: `
     <section
       class="py-32 bg-vera-green transition-colors duration-300 overflow-hidden"
+      aria-labelledby="how-it-works-heading"
     >
       <div class="container mx-auto px-4">
-        <!-- Header -->
         <div class="text-center mb-24">
           <p
             class="text-sm font-medium uppercase tracking-wider text-primary/70 mb-4"
@@ -21,6 +21,7 @@ import { IconComponent } from '../../../../shared/components/icon/icon.component
             Comment ça marche ?
           </p>
           <h2
+            id="how-it-works-heading"
             class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary"
           >
             Posez votre question
@@ -37,18 +38,18 @@ import { IconComponent } from '../../../../shared/components/icon/icon.component
         <div
           class="relative grid lg:grid-cols-2 gap-32 items-center max-w-7xl mx-auto"
         >
-          <!-- Left Column: Phone & CTA -->
           <div class="relative flex flex-col items-center">
-            <!-- Phone Mockup -->
-            <div class="relative z-10 w-64 md:w-80 mx-auto mb-12">
+            <div 
+              class="relative z-10 w-64 md:w-80 mx-auto mb-12"
+              role="img"
+              aria-label="Aperçu de l'interface mobile de Vera avec un champ de saisie pour poser des questions">
               <div
                 class="relative rounded-[3rem] border-8 border-primary bg-vera-cream overflow-hidden shadow-2xl"
               >
-                <!-- Screen Content -->
                 <div class="h-[550px] bg-vera-cream flex flex-col relative">
-                  <!-- Status Bar -->
                   <div
                     class="h-6 w-full bg-transparent flex justify-between px-6 py-2 text-[10px] font-bold text-primary"
+                    aria-hidden="true"
                   >
                     <span>9:41</span>
                     <div class="flex gap-1">
@@ -64,23 +65,21 @@ import { IconComponent } from '../../../../shared/components/icon/icon.component
                     </div>
                   </div>
 
-                  <!-- App Content -->
                   <div
                     class="flex-1 p-4 flex flex-col items-center justify-center text-center"
                   >
-                    <div class="mb-4">
+                    <div class="mb-4" aria-hidden="true">
                       <app-icon icon="logov" [width]="60" [height]="60" class="text-primary"></app-icon>
                     </div>
                     <p class="text-xs text-gray-500 mb-8">
                       Votre feed vous plaît, mais dit-il vrai
                     </p>
 
-                    <!-- Chat Input Mock -->
                     <div
                       class="mt-auto w-full bg-primary text-white p-3 rounded-2xl flex items-center justify-between text-xs"
                     >
                       <span>Entrer l'information à vérifier</span>
-                      <div class="flex gap-2">
+                      <div class="flex gap-2" aria-hidden="true">
                         <span class="material-icons-outlined text-sm">mic</span>
                         <span
                           class="material-icons-outlined text-sm bg-vera-green text-primary rounded-full p-0.5"
@@ -93,45 +92,42 @@ import { IconComponent } from '../../../../shared/components/icon/icon.component
               </div>
             </div>
 
-            <!-- Bottom CTA -->
             <div class="text-center relative z-10">
               <h3 class="font-display text-2xl md:text-3xl mb-6 text-primary">
                 Accédez à Vera Web en ligne
               </h3>
-              <button
+              <a
                 routerLink="/fact-checking"
-                class="bg-primary text-white px-8 py-4 rounded-full font-medium text-base hover:scale-105 transition-transform shadow-lg" 
+                class="inline-block bg-primary text-white px-8 py-4 rounded-full font-medium text-base hover:scale-105 transition-transform shadow-lg"
+                aria-label="Accéder à Vera Web pour commencer à vérifier des informations"
               >
                 Sans installation et à tout moment
-              </button>
+              </a>
             </div>
 
-            <!-- Arrow 1 (Phone to Right Top) -->
             <img
               src="/images/fleche-1.png"
-              alt="Arrow pointing to step 1"
+              alt=""
+              aria-hidden="true"
               class="absolute top-[20%] -right-40 w-56 hidden lg:block z-20 transform rotate-12"
             />
 
-            <!-- Arrow 2 (Phone to Right Bottom) -->
             <img
               src="/images/fleche-2.png"
-              alt="Arrow pointing to step 2"
+              alt=""
+              aria-hidden="true"
               class="absolute bottom-[25%] -right-40 w-56 hidden lg:block z-20 transform -rotate-12"
             />
           </div>
 
-          <!-- Right Column: Steps -->
           <div
             class="flex flex-col items-center lg:items-start space-y-24 text-center lg:text-left pt-10 lg:pt-0 lg:pl-10"
           >
-            <!-- Step 1 -->
             <div class="w-full flex flex-col items-center">
               <div class="mb-6">
-                <!-- Avatar Image -->
                 <img
                   src="/images/avatar.png"
-                  alt="Avatar utilisateurs"
+                  alt="Illustration représentant des utilisateurs de Vera"
                   class="w-24 h-auto object-contain"
                 />
               </div>
@@ -143,10 +139,11 @@ import { IconComponent } from '../../../../shared/components/icon/icon.component
               </p>
             </div>
 
-            <!-- Step 2 -->
             <div class="w-full flex flex-col items-center relative">
-              <!-- Chat Bubbles -->
-              <div class="relative mb-8 w-full max-w-xs mx-auto space-y-4">
+              <div 
+                class="relative mb-8 w-full max-w-xs mx-auto space-y-4"
+                role="img"
+                aria-label="Exemple de conversation : question sur les migrants aux États-Unis et réponse de Vera démontrant la rumeur">
                 <div
                   class="bg-white text-primary p-4 rounded-2xl rounded-tl-none shadow-lg text-sm text-left font-medium animate-float"
                 >
@@ -206,7 +203,6 @@ import { IconComponent } from '../../../../shared/components/icon/icon.component
         animation-delay: 1s;
       }
 
-      /* Highlighter Effect */
       .highlighter-effect {
         background-image: linear-gradient(to right, white, white);
         background-size: 0% 100%;
@@ -214,16 +210,32 @@ import { IconComponent } from '../../../../shared/components/icon/icon.component
         transition: background-size 2s cubic-bezier(0.22, 1, 0.36, 1);
       }
 
-      /* When the directive adds the .in-view class */
       .highlighter-effect.in-view {
         background-size: 100% 100%;
       }
 
-      /* Dark mode support - keep white highlight */
       :host-context(.dark) .highlighter-effect {
         background-image: linear-gradient(to right, white, white);
+      }
+
+
+      @media (prefers-reduced-motion: reduce) {
+        .animate-float,
+        .animate-float-delayed {
+          animation: none;
+        }
+
+        .highlighter-effect {
+          transition: none;
+        }
+
+        * {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+        }
       }
     `,
   ],
 })
 export class HowItWorksComponent { }
+

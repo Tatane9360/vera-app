@@ -1,99 +1,164 @@
-<section class="py-24 bg-vera-green transition-colors duration-300 overflow-hidden">
+<section
+  class="py-24 bg-vera-green transition-colors duration-300 overflow-hidden"
+  aria-labelledby="sources-heading"
+>
   <div class="container mx-auto px-4">
-    
-    <!-- Header -->
     <div class="text-center mb-16">
-      <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary max-w-4xl mx-auto leading-tight mb-12">
-        Vera est connectée en temps réel <br/> à 400+ sites de fact-checking
+      <h2
+        id="sources-heading"
+        class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary max-w-4xl mx-auto leading-tight mb-12"
+      >
+        Vera est connectée en temps réel <br />
+        à 400+ sites de fact-checking
       </h2>
-      
-      <!-- Infinite Scroll Carousel Container -->
-      <div class="relative w-full overflow-hidden mask-gradient">
-        
-        <!-- Row 1: Scrolling Left -->
+
+      <div
+        class="relative w-full overflow-hidden mask-gradient"
+        aria-hidden="true"
+        role="presentation"
+      >
         <div class="flex gap-8 mb-8 animate-scroll-left w-max">
-          <!-- Original Set -->
-          <div *ngFor="let source of sourcesRow1" class="flex items-center justify-center w-24 h-24 bg-white/50  backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4">
-             <img [src]="source" alt="Source logo" class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity" />
+          <div
+            *ngFor="let source of sourcesRow1"
+            class="flex items-center justify-center w-24 h-24 bg-white/50 backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4"
+          >
+            <img
+              [src]="source"
+              alt=""
+              class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity"
+            />
           </div>
-          <!-- Duplicate Set for Infinite Loop -->
-          <div *ngFor="let source of sourcesRow1" class="flex items-center justify-center w-24 h-24 bg-white/50  backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4">
-             <img [src]="source" alt="Source logo" class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity" />
+          <div
+            *ngFor="let source of sourcesRow1"
+            class="flex items-center justify-center w-24 h-24 bg-white/50 backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4"
+          >
+            <img
+              [src]="source"
+              alt=""
+              class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity"
+            />
           </div>
         </div>
 
-        <!-- Row 2: Scrolling Right -->
         <div class="flex gap-8 animate-scroll-right w-max">
-          <!-- Original Set -->
-          <div *ngFor="let source of sourcesRow2" class="flex items-center justify-center w-24 h-24 bg-white/50  backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4">
-             <img [src]="source" alt="Source logo" class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity" />
+          <div
+            *ngFor="let source of sourcesRow2"
+            class="flex items-center justify-center w-24 h-24 bg-white/50 backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4"
+          >
+            <img
+              [src]="source"
+              alt=""
+              class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity"
+            />
           </div>
-          <!-- Duplicate Set for Infinite Loop -->
-          <div *ngFor="let source of sourcesRow2" class="flex items-center justify-center w-24 h-24 bg-white/50  backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4">
-             <img [src]="source" alt="Source logo" class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity" />
+          <div
+            *ngFor="let source of sourcesRow2"
+            class="flex items-center justify-center w-24 h-24 bg-white/50 backdrop-blur-sm rounded-2xl shadow-sm hover:scale-110 transition-transform duration-300 overflow-hidden p-4"
+          >
+            <img
+              [src]="source"
+              alt=""
+              class="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity"
+            />
           </div>
         </div>
-
       </div>
     </div>
 
-    <!-- Cards Container -->
     <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mt-16">
-      
-      <!-- Card 1: Fact-Checking Sites -->
-      <div 
-        appTilt 
+      <article
+        appTilt
         [tiltMaxAngle]="3"
         class="bg-vera-cream border border-primary/5 p-8 rounded-[2rem] shadow-xl transition-shadow duration-300"
+        aria-labelledby="fact-checking-heading"
       >
-        <h3 class="font-display text-3xl md:text-4xl font-bold text-primary mb-2">
+        <h3
+          id="fact-checking-heading"
+          class="font-display text-3xl md:text-4xl font-bold text-primary mb-2"
+        >
           150+ sites de fact-checking
         </h3>
-        <p class="text-primary/70 mb-8 font-medium">Pour la vérification de faits</p>
-        
+        <p class="text-primary/70 mb-8 font-medium">
+          Pour la vérification de faits
+        </p>
+
         <ul class="space-y-4 mb-10">
           <li class="flex items-start gap-3">
-            <span class="material-icons-outlined text-green-600 mt-0.5">check</span>
-            <span class="text-primary/90 ">Signataires des chartes européennes IFCN et EFCSN</span>
+            <span
+              class="material-icons-outlined text-green-600 mt-0.5"
+              aria-hidden="true"
+              >check</span
+            >
+            <span class="text-primary/90"
+              >Signataires des chartes européennes IFCN et EFCSN</span
+            >
           </li>
           <li class="flex items-start gap-3">
-            <span class="material-icons-outlined text-green-600 mt-0.5">check</span>
-            <span class="text-primary/90 ">Agences de presses spécialisées en fact-checking</span>
+            <span
+              class="material-icons-outlined text-green-600 mt-0.5"
+              aria-hidden="true"
+              >check</span
+            >
+            <span class="text-primary/90"
+              >Agences de presses spécialisées en fact-checking</span
+            >
           </li>
         </ul>
 
-        <button class="bg-primary text-white px-8 py-3 rounded-full font-medium hover:opacity-90 transition-opacity w-full sm:w-auto">
+        <a
+          href="#"
+          class="inline-block bg-primary text-white px-8 py-3 rounded-full font-medium hover:opacity-90 transition-opacity w-full sm:w-auto text-center"
+          aria-label="Voir la liste complète des 150+ sites de fact-checking"
+        >
           Voir la liste des sources
-        </button>
-      </div>
+        </a>
+      </article>
 
-      <!-- Card 2: Reliable Media -->
-      <div 
-        appTilt 
+      <article
+        appTilt
         [tiltMaxAngle]="3"
         class="bg-vera-cream border border-primary/5 p-8 rounded-[2rem] shadow-xl transition-shadow duration-300"
+        aria-labelledby="media-heading"
       >
-        <h3 class="font-display text-3xl md:text-4xl font-bold text-primary mb-2">
+        <h3
+          id="media-heading"
+          class="font-display text-3xl md:text-4xl font-bold text-primary mb-2"
+        >
           250+ médias fiables et reconnus
         </h3>
-        <p class="text-primary/70 mb-8 font-medium">Pour connaître l'actualité</p>
-        
+        <p class="text-primary/70 mb-8 font-medium">
+          Pour connaître l'actualité
+        </p>
+
         <ul class="space-y-4 mb-10">
           <li class="flex items-start gap-3">
-            <span class="material-icons-outlined text-green-600 mt-0.5">check</span>
+            <span
+              class="material-icons-outlined text-green-600 mt-0.5"
+              aria-hidden="true"
+              >check</span
+            >
             <span class="text-primary/90">Tous les bords politiques</span>
           </li>
           <li class="flex items-start gap-3">
-            <span class="material-icons-outlined text-green-600 mt-0.5">check</span>
-            <span class="text-primary/90">Réputés comme fiables et sérieux</span>
+            <span
+              class="material-icons-outlined text-green-600 mt-0.5"
+              aria-hidden="true"
+              >check</span
+            >
+            <span class="text-primary/90"
+              >Réputés comme fiables et sérieux</span
+            >
           </li>
         </ul>
 
-        <button class="bg-primary text-white px-8 py-3 rounded-full font-medium hover:opacity-90 transition-opacity w-full sm:w-auto">
+        <a
+          href="#"
+          class="inline-block bg-primary text-white px-8 py-3 rounded-full font-medium hover:opacity-90 transition-opacity w-full sm:w-auto text-center"
+          aria-label="Voir la liste complète des 250+ médias fiables"
+        >
           Voir la liste des sources
-        </button>
-      </div>
-
+        </a>
+      </article>
     </div>
   </div>
 </section>

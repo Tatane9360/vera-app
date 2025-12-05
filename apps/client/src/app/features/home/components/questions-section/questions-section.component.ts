@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <section class="py-12 bg-[#1E1E1E] text-[#F5ECDE]">
+    <section 
+      class="py-12 bg-[#1E1E1E] text-[#F5ECDE]"
+      aria-labelledby="questions-heading">
       <div class="container mx-auto px-4 sm:px-6">
-        <!-- Header -->
         <div class="flex items-center gap-4 mb-10">
-          <div class="w-8 h-10 flex-shrink-0">
+          <div class="w-8 h-10 flex-shrink-0" aria-hidden="true">
             <svg
               width="21"
               height="29"
@@ -18,6 +19,7 @@ import { CommonModule } from '@angular/common';
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               class="w-full h-full scale-150"
+              aria-hidden="true"
             >
               <path
                 fill-rule="evenodd"
@@ -27,25 +29,42 @@ import { CommonModule } from '@angular/common';
               />
             </svg>
           </div>
-          <h2 class="font-display text-3xl md:text-4xl lg:text-5xl">
+          <h2 
+            id="questions-heading"
+            class="font-display text-3xl md:text-4xl lg:text-5xl">
             Quelles questions puis-je poser à Vera ?
           </h2>
         </div>
 
-        <!-- Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div
-            *ngFor="let question of questions"
+        <ul 
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          role="list"
+          aria-label="Exemples de questions à poser à Vera">
+          <li
+            *ngFor="let question of questions; let i = index"
             class="bg-[url('/images/background.png')] bg-cover bg-center p-6 rounded-2xl h-full min-h-[140px] flex items-center transition-transform hover:-translate-y-1 duration-300"
           >
             <p class="text-[#1E1E1E] font-medium text-lg leading-relaxed">
               "{{ question }}"
             </p>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     </section>
   `,
+  styles: [
+    `
+      @media (prefers-reduced-motion: reduce) {
+        .hover\\:-translate-y-1:hover {
+          transform: none;
+        }
+
+        .transition-transform {
+          transition: none;
+        }
+      }
+    `,
+  ],
 })
 export class QuestionsSectionComponent {
   questions = [
@@ -57,3 +76,4 @@ export class QuestionsSectionComponent {
     'Mon père dit que le gilet fluo va être obligatoire pour se promener en forêt',
   ];
 }
+

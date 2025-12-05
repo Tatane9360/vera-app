@@ -39,7 +39,22 @@ export const appRoutes: Route[] = [
       import('./features/fact-checking/fact-checking.routes').then((m) => m.FACT_CHECKING_ROUTES),
   },
   {
+    path: 'mentions-legales',
+    loadComponent: () =>
+      import('./features/legal/mentions-legales.component').then((m) => m.MentionsLegalesComponent),
+  },
+  {
+    path: 'confidentialite',
+    loadComponent: () =>
+      import('./features/legal/confidentialite.component').then((m) => m.ConfidentialiteComponent),
+  },
+  {
+    path: 'cgu',
+    loadComponent: () =>
+      import('./features/legal/cgu.component').then((m) => m.CguComponent),
+  },
+  {
     path: '**',
     redirectTo: '',
   },
-]; 
+];

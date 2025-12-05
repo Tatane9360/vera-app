@@ -48,3 +48,20 @@
     animation-play-state: paused;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-scroll-left,
+  .animate-scroll-right {
+    animation: none;
+  }
+
+  .hover\:scale-110:hover {
+    transform: none;
+  }
+
+  .transition-transform,
+  .transition-opacity,
+  .transition-shadow {
+    transition: none;
+  }
+}

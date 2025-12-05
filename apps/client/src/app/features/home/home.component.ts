@@ -24,7 +24,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './home.component.scss',
   styles: [
     `
-      /* Highlighter Effect */
       .highlighter-effect {
         background-image: linear-gradient(to right, #dbf9be, #dbf9be);
         background-size: 0% 100%;
@@ -39,7 +38,13 @@ import { RouterModule } from '@angular/router';
 
       :host-context(.dark) .highlighter-effect {
         background-image: linear-gradient(to right, #dbf9be, #dbf9be);
-        color: #111111; /* Ensure text is dark on light background */
+        color: #111111;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .highlighter-effect {
+          transition: none;
+        }
       }
     `,
   ],
@@ -52,9 +57,11 @@ export class HomeComponent {
   });
   loading = signal(false);
   error = signal<string | null>(null);
+  prefersReducedMotion = signal(false);
 
   constructor() {
     this.loadData();
+    this.checkReducedMotion();
   }
 
   loadData() {
@@ -74,11 +81,26 @@ export class HomeComponent {
     });
   }
 
+  checkReducedMotion() {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      this.prefersReducedMotion.set(mediaQuery.matches);
+      
+      mediaQuery.addEventListener('change', (e) => {
+        this.prefersReducedMotion.set(e.matches);
+      });
+    }
+  }
+
   transformStyle = signal(
     'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)'
   );
 
   onMouseMove(event: MouseEvent) {
+    if (this.prefersReducedMotion()) {
+      return;
+    }
+
     const container = event.currentTarget as HTMLElement;
     const rect = container.getBoundingClientRect();
     const x = event.clientX - rect.left;
@@ -96,8 +118,17 @@ export class HomeComponent {
   }
 
   onMouseLeave() {
+    if (this.prefersReducedMotion()) {
+      return;
+    }
+
     this.transformStyle.set(
       'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)'
     );
+  }
+
+  onDemoClick(event: Event) {
+    event.preventDefault();
+    console.log('Demo video would open here');
   }
 }

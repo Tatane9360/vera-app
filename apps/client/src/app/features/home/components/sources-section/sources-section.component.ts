@@ -10,7 +10,6 @@ import { TiltDirective } from '../../../../shared/directives/tilt.directive';
   styleUrl: './sources-section.component.scss'
 })
 export class SourcesSectionComponent {
-  // Row 1: Images 1-7 (Duplicated for smooth infinite scroll)
   sourcesRow1 = [
     '/images/logo-carousel-1.png',
     '/images/logo-carousel-2.png',
@@ -19,7 +18,6 @@ export class SourcesSectionComponent {
     '/images/logo-carousel-5.png',
     '/images/logo-carousel-6.png',
     '/images/logo-carousel-7.png',
-    // Duplicates
     '/images/logo-carousel-1.png',
     '/images/logo-carousel-2.png',
     '/images/logo-carousel-3.png',
@@ -36,7 +34,6 @@ export class SourcesSectionComponent {
     '/images/logo-carousel-7.png'
   ];
 
-  // Row 2: Images 8-13 (Duplicated for smooth infinite scroll)
   sourcesRow2 = [
     '/images/logo-carousel-8.png',
     '/images/logo-carousel-9.png',
@@ -44,7 +41,6 @@ export class SourcesSectionComponent {
     '/images/logo-carousel-11.png',
     '/images/logo-carousel-12.png',
     '/images/logo-carousel-13.png',
-    // Duplicates
     '/images/logo-carousel-8.png',
     '/images/logo-carousel-9.png',
     '/images/logo-carousel-10.png',
