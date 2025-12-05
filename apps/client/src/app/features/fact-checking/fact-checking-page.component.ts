@@ -118,8 +118,11 @@ export class FactCheckingPageComponent implements OnInit {
   }
 
   onSendText(text: string) {
-    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
-    if (youtubeRegex.test(text)) {
+    // Detect any URL pattern (http/https)
+    const urlRegex =
+      /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
+
+    if (urlRegex.test(text.trim())) {
       this.addMessage('user', text, 'url');
       this.processUrl(text);
     } else {
