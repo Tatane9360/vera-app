@@ -14,8 +14,8 @@ module.exports = {
         primary: "#232321",
       },
       fontFamily: {
-        display: ["Merriweather", "serif"],
-        sans: ["Roboto", "sans-serif"],
+        display: ["Lastik", "Fustat", "sans-serif"],
+        sans: ["Fustat", "sans-serif"],
       },
       borderRadius: {
         DEFAULT: "1.25rem",
