@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
-import { IAnalyticsData, IAnalyticsResponse } from '@compet-website/shared-types';
+import {
+  IAnalyticsData,
+  IAnalyticsResponse,
+} from '@compet-website/shared-types';
 import { ConfigService } from '@nestjs/config';
 import * as path from 'path';
 
@@ -10,7 +13,9 @@ export class AnalyticsService {
   private propertyId: string | undefined;
 
   constructor(private configService: ConfigService) {
-    const googleCredentialsJson = this.configService.get<string>('GOOGLE_CREDENTIALS_JSON');
+    const googleCredentialsJson = this.configService.get<string>(
+      'GOOGLE_CREDENTIALS_JSON'
+    );
     let authOptions: any = {};
 
     if (googleCredentialsJson) {
@@ -21,14 +26,20 @@ export class AnalyticsService {
       }
     } else {
       // Fallback to local file for development
-      authOptions.keyFilename = path.join(process.cwd(), 'apps/server/google-credentials.json');
+      authOptions.keyFilename = path.join(
+        process.cwd(),
+        'apps/server/google-credentials.json'
+      );
     }
 
     this.analyticsDataClient = new BetaAnalyticsDataClient(authOptions);
     this.propertyId = this.configService.get<string>('GA_PROPERTY_ID');
   }
 
-  async getBasicStats(startDate = '7daysAgo', endDate = 'today'): Promise<IAnalyticsData> {
+  async getBasicStats(
+    startDate = '7daysAgo',
+    endDate = 'today'
+  ): Promise<IAnalyticsData> {
     if (!this.propertyId) {
       throw new Error('GA_PROPERTY_ID is not configured');
     }
@@ -58,9 +69,55 @@ export class AnalyticsService {
             name: 'sessions',
           },
         ],
+        orderBys: [
+          {
+            dimension: {
+              orderType: 'ALPHANUMERIC',
+              dimensionName: 'date',
+            },
+          },
+        ],
       });
 
-      return this.processReport(response as IAnalyticsResponse);
+      // Fetch Geo Data
+      const [geoResponse] = await this.analyticsDataClient.runReport({
+        property: `properties/${this.propertyId}`,
+        dateRanges: [
+          {
+            startDate: startDate,
+            endDate: endDate,
+          },
+        ],
+        dimensions: [
+          {
+            name: 'country',
+          },
+        ],
+        metrics: [
+          {
+            name: 'activeUsers',
+          },
+        ],
+      });
+
+      const basicStats = this.processReport(response as IAnalyticsResponse);
+
+      // Process Geo Data
+      const geoData =
+        geoResponse.rows
+          ?.map((row) => {
+            const country = row.dimensionValues?.[0]?.value || 'Non défini';
+            return {
+              country: country === '(not set)' ? 'Non défini' : country,
+              activeUsers: Number(row.metricValues?.[0]?.value || 0),
+            };
+          })
+          .sort((a, b) => b.activeUsers - a.activeUsers) || [];
+
+      return {
+        ...basicStats,
+        geoData,
+      };
     } catch (error) {
       console.error('GA Error:', error);
       throw error;
@@ -75,8 +132,11 @@ export class AnalyticsService {
 
     response.rows?.forEach((row) => {
       const dateStr = row.dimensionValues[0].value;
-      const formattedDate = `${dateStr.substring(6, 8)}/${dateStr.substring(4, 6)}`;
-      
+      const formattedDate = `${dateStr.substring(6, 8)}/${dateStr.substring(
+        4,
+        6
+      )}`;
+
       labels.push(formattedDate);
       activeUsers.push(Number(row.metricValues[0].value));
       pageViews.push(Number(row.metricValues[1].value));
@@ -88,8 +148,8 @@ export class AnalyticsService {
       datasets: {
         activeUsers,
         pageViews,
-        sessions
-      }
+        sessions,
+      },
     };
   }
 }

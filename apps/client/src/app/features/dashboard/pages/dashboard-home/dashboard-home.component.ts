@@ -52,19 +52,45 @@ interface Question {
         </div>
       </div>
 
-      <!-- Stats Grid -->
-      <div
-        class="grid grid-cols-1 md:grid-cols-3 gap-6"
-        *ngIf="stats$ | async as stats"
-      >
-        <app-stat-card
-          *ngFor="let stat of stats"
-          [title]="stat.title"
-          [value]="stat.value"
-          [percentage]="stat.percentage"
-          [data]="stat.data"
-        ></app-stat-card>
-      </div>
+      <!-- Stats & Geo Data -->
+      <ng-container *ngIf="dashboardData$ | async as data">
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <app-stat-card
+            *ngFor="let stat of data.stats"
+            [title]="stat.title"
+            [value]="stat.value"
+            [percentage]="stat.percentage"
+            [data]="stat.data"
+          ></app-stat-card>
+        </div>
+
+        <!-- Geo Data Section -->
+        <div class="mt-8" *ngIf="data.geoData && data.geoData.length > 0">
+          <h2 class="text-xl md:text-2xl font-bold text-white mb-4">
+            Répartition Géographique
+          </h2>
+          <div class="bg-[#1E1E1E] border border-gray-800 rounded-lg p-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div
+                *ngFor="let item of data.geoData | slice : 0 : 9"
+                class="flex items-center justify-between p-3 bg-black/20 rounded-lg border border-gray-700/50"
+              >
+                <div class="flex items-center gap-3">
+                  <span class="text-gray-300 font-medium">{{
+                    item.country
+                  }}</span>
+                </div>
+                <span
+                  class="text-white font-bold bg-primary/20 px-2 py-1 rounded text-sm text-primary"
+                >
+                  {{ item.activeUsers }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
 
       <!-- Questions Section -->
       <div class="mt-8">
@@ -90,7 +116,9 @@ interface Question {
             *ngFor="let question of questionsData?.data"
             class="bg-[#1E1E1E] border border-gray-800 rounded-lg p-4 hover:border-gray-700 transition-colors"
           >
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+            <div
+              class="flex flex-col md:flex-row md:items-center md:justify-between gap-2"
+            >
               <p class="text-white text-sm md:text-base flex-1">
                 {{ question.question }}
               </p>
@@ -148,16 +176,25 @@ export class DashboardHomeComponent implements OnInit {
   selectedPeriod = this.periods[1]; // Default to Week
   private periodSubject = new BehaviorSubject(this.selectedPeriod);
 
-  stats$ = this.periodSubject.pipe(
+  dashboardData$ = this.periodSubject.pipe(
     switchMap((period) =>
       this.apiService.getAnalyticsStats(period.startDate, 'today')
     ),
     map((data) => {
-      const activeUsers = data.datasets.activeUsers.reduce((a: number, b: number) => a + b, 0);
-      const pageViews = data.datasets.pageViews.reduce((a: number, b: number) => a + b, 0);
-      const sessions = data.datasets.sessions.reduce((a: number, b: number) => a + b, 0);
+      const activeUsers = data.datasets.activeUsers.reduce(
+        (a: number, b: number) => a + b,
+        0
+      );
+      const pageViews = data.datasets.pageViews.reduce(
+        (a: number, b: number) => a + b,
+        0
+      );
+      const sessions = data.datasets.sessions.reduce(
+        (a: number, b: number) => a + b,
+        0
+      );
 
-      return [
+      const stats = [
         {
           title: 'Utilisateurs Actifs',
           value: activeUsers.toLocaleString(),
@@ -177,6 +214,8 @@ export class DashboardHomeComponent implements OnInit {
           data: data.datasets.sessions,
         },
       ];
+
+      return { stats, geoData: data.geoData };
     })
   );
 

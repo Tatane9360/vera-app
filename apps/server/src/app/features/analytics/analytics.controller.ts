@@ -8,7 +8,7 @@ export class AnalyticsController {
   @Get('stats')
   async getStats(
     @Query('startDate') startDate?: string,
-    @Query('endDate') endDate?: string,
+    @Query('endDate') endDate?: string
   ) {
     return this.analyticsService.getBasicStats(startDate, endDate);
   }

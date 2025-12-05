@@ -5,6 +5,10 @@ export interface IAnalyticsData {
     pageViews: number[];
     sessions: number[];
   };
+  geoData?: {
+    country: string;
+    activeUsers: number;
+  }[];
 }
 
 export interface IAnalyticsResponse {
