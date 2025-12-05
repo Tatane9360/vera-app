@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InViewDirective } from '../../../../shared/directives/in-view.directive';
 import { RouterModule } from '@angular/router';
+import { IconComponent } from '../../../../shared/components/icon/icon.component';
 
 @Component({
   selector: 'app-how-it-works',
   standalone: true,
-  imports: [CommonModule, InViewDirective, RouterModule],
+  imports: [CommonModule, InViewDirective, RouterModule, IconComponent],
   template: `
     <section
       class="py-32 bg-vera-green transition-colors duration-300 overflow-hidden"
@@ -68,7 +69,7 @@ import { RouterModule } from '@angular/router';
                     class="flex-1 p-4 flex flex-col items-center justify-center text-center"
                   >
                     <div class="mb-4">
-                      <span class="font-display text-6xl font-bold">V</span>
+                      <app-icon icon="logov" [width]="60" [height]="60" class="text-primary"></app-icon>
                     </div>
                     <p class="text-xs text-gray-500 mb-8">
                       Votre feed vous plaît, mais dit-il vrai
