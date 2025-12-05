@@ -52,8 +52,7 @@
     <!-- Input Area -->
     <app-chat-input
       class="z-20 flex-shrink-0"
-      (sendText)="onSendText($event)"
-      (sendFile)="onSendFile($event)"
+      (messageSent)="onSendMessage($event)"
     ></app-chat-input>
   </div>
 </div>

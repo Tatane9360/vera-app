@@ -109,6 +109,14 @@ export class FactCheckingPageComponent implements OnInit {
 
   // --- Message Handling Wrappers ---
 
+  onSendMessage(event: { text: string | null; file: File | null }) {
+    if (event.file) {
+      this.handleImageAnalysis(event.file, event.text);
+    } else if (event.text) {
+      this.onSendText(event.text);
+    }
+  }
+
   onSendText(text: string) {
     const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
     if (youtubeRegex.test(text)) {
@@ -121,26 +129,28 @@ export class FactCheckingPageComponent implements OnInit {
     this.saveCurrentConversation();
   }
 
+  // kept for compatibility if needed, but unused by template now
   onSendFile(file: File) {
-    this.handleImageAnalysis(file);
+    this.handleImageAnalysis(file, null);
   }
 
-  async handleImageAnalysis(file: File) {
+  async handleImageAnalysis(file: File, text: string | null) {
     const reader = new FileReader();
     reader.onload = (e) => {
       const preview = e.target?.result as string;
-      this.addMessage('user', "Analyse de l'image...", 'image', preview);
-      this.processImage(file);
+      const content = text || "Analyse de l'image...";
+      this.addMessage('user', content, 'image', preview);
+      this.processImage(file, text);
       this.saveCurrentConversation();
     };
     reader.readAsDataURL(file);
   }
 
-  processImage(file: File) {
+  processImage(file: File, text: string | null) {
     this.isLoading.set(true);
     const loadingMsgId = this.addLoadingMessage();
 
-    this.factCheckingService.analyzeImage(file).subscribe({
+    this.factCheckingService.analyzeImage(file, text || undefined).subscribe({
       next: (response) => {
         this.removeMessage(loadingMsgId);
         const verification = response.verification || response.text;
